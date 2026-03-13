@@ -3,29 +3,29 @@ import { Award, Trophy, Star, Target } from 'lucide-react';
 const achievements = [
   {
     icon: Trophy,
-    title: 'National Finalist – Tata Crucible',
-    description: 'National Finalist at India\'s premier business quiz competition.',
+    title: 'Semi-Finalist — iPreneur',
+    description: 'Semi-Finalist at iPreneur Social Entrepreneurship Summit.',
   },
   {
     icon: Award,
-    title: 'IIT-JEE Advanced – Top 0.5%',
+    title: 'IIT-JEE Advanced AIR 4444',
     description: 'Ranked among the top 0.5% of 1.2M+ candidates in one of the world\'s toughest exams.',
   },
   {
     icon: Star,
-    title: 'Winner – E-Summit IIT Roorkee',
-    description: 'Won the flagship entrepreneurship competition at IIT Roorkee\'s E-Summit.',
+    title: 'First Runner-Up — Rural Internet',
+    description: 'First Runner-Up at Rural Internet Sustainability event, IIT Roorkee.',
   },
   {
     icon: Target,
-    title: 'Product Impact – $17M+ ARR',
-    description: 'Directly contributed to $17M+ annual recurring revenue through product initiatives at Sprinklr.',
+    title: 'Second Runner-Up — Cognizance',
+    description: 'Second Runner-Up at Supply Chain Event Cognizance.',
   },
 ];
 
 const AchievementsSection = () => {
   return (
-    <section id="achievements" className="py-24 px-6">
+    <section id="achievements" className="py-24 px-6 bg-secondary/30">
       <div className="max-w-5xl mx-auto">
         <div className="animate-on-scroll mb-16 text-center">
           <p className="text-sm tracking-[0.2em] uppercase text-primary font-medium mb-3">Recognition</p>

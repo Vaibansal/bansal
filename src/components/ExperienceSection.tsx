@@ -6,10 +6,12 @@ const experiences = [
     role: 'Senior Product Manager',
     period: 'Aug 2024 – Present',
     location: 'Hyderabad',
+    description: 'Led product initiatives focused on AI-driven automation and enterprise product demonstrations.',
     highlights: [
-      'Drove $6M pipeline by designing AI-powered integration builder reducing development time by 40%',
-      'Led end-to-end product lifecycle for platform serving 10K+ enterprise users',
-      'Implemented real-time monitoring, increasing incident detection speed by 80%',
+      'Built an automated demo creation system reducing delivery time by 47%',
+      'Helped generate $450K in new ARR through enterprise product demonstrations',
+      'Worked with integrations across 400+ connectors and 60+ UI components',
+      'Collaborated closely with sales teams to accelerate enterprise deal cycles',
     ],
   },
   {
@@ -17,32 +19,36 @@ const experiences = [
     role: 'Product Manager → Senior Product Analyst',
     period: 'Jun 2021 – Aug 2024',
     location: 'Gurugram',
+    description: 'Worked on digital customer care and experience management platforms used by large global enterprises.',
     highlights: [
-      'Drove $17M+ ARR and managed 2 product areas across 6 feature modules',
-      'Led 500+ agent operations hub, reducing average handle time by 40%',
-      'Designed 30+ workflows for global brands like Samsung, Uber, and L\'Oréal',
-      'Achieved 80% adoption rate on new reporting dashboards within 3 months of launch',
+      'Led product initiatives generating $17M ARR',
+      'Improved user productivity by 20%',
+      'Reduced support tickets by 25% through product improvements',
+      'Built standardized user personas to improve product adoption across 15K+ users',
     ],
   },
   {
-    company: 'Sprinklr',
-    role: 'Associate Product Manager (Intern)',
-    period: 'May 2020 – Jul 2020',
-    location: 'Gurugram',
+    company: 'TBS Planet Comics',
+    role: 'Founder',
+    period: '2019 – 2022',
+    location: 'IIT Roorkee',
+    description: 'Founded an IIT Roorkee incubated comics venture focused on digital storytelling.',
     highlights: [
-      'Developed product for auto-triaging and routing customer care messages',
-      'Implemented ML-driven deflection strategies reducing agent workload by 25%',
+      'Managed 5 simultaneous projects with artists and studios',
+      'Built a network of 500+ campus ambassadors',
+      'Grew a digital subscriber base to 6000+ users',
+      'Created vernacular comics available in six languages',
     ],
   },
 ];
 
 const ExperienceSection = () => {
   return (
-    <section id="experience" className="py-24 px-6 bg-secondary/30">
+    <section id="experience" className="py-24 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="animate-on-scroll mb-16 text-center">
           <p className="text-sm tracking-[0.2em] uppercase text-primary font-medium mb-3">Career Journey</p>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground">Experience</h2>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground">Professional Experience</h2>
         </div>
 
         <div className="relative">
@@ -76,7 +82,8 @@ const ExperienceSection = () => {
                   </div>
                   <h3 className="font-serif text-xl font-semibold text-foreground mb-1">{exp.company}</h3>
                   <p className="text-sm text-muted-foreground mb-1">{exp.role}</p>
-                  <p className="text-xs text-muted-foreground/60 mb-4">{exp.location}</p>
+                  <p className="text-xs text-muted-foreground/60 mb-3">{exp.location}</p>
+                  <p className="text-sm text-muted-foreground/80 mb-4 italic">{exp.description}</p>
                   <ul className="space-y-2">
                     {exp.highlights.map((h, i) => (
                       <li key={i} className="text-sm text-muted-foreground leading-relaxed flex items-start gap-2">

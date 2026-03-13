@@ -2,19 +2,19 @@ import { Mail, Phone, Linkedin, MapPin } from 'lucide-react';
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-24 px-6 bg-secondary/30">
+    <section id="contact" className="py-24 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="animate-on-scroll mb-16 text-center">
           <p className="text-sm tracking-[0.2em] uppercase text-primary font-medium mb-3">Let's Connect</p>
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground mb-4">Get In Touch</h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            I'm always open to discussing product management, new opportunities, or just having a great conversation.
+            I'm always open to discussing product management, operations, new opportunities, or just having a great conversation.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
           <a
-            href="mailto:vaibhaviitroorkee@gmail.com"
+            href="mailto:vaibhavbansal2812@gmail.com"
             className="animate-on-scroll stagger-1 bg-card border border-border rounded-xl p-6 flex items-center gap-4 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1 group"
           >
             <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors">
@@ -22,12 +22,12 @@ const ContactSection = () => {
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-0.5">Email</p>
-              <p className="text-sm font-medium text-foreground">vaibhaviitroorkee@gmail.com</p>
+              <p className="text-sm font-medium text-foreground">vaibhavbansal2812@gmail.com</p>
             </div>
           </a>
 
           <a
-            href="tel:+919896350498"
+            href="tel:+918949078417"
             className="animate-on-scroll stagger-2 bg-card border border-border rounded-xl p-6 flex items-center gap-4 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1 group"
           >
             <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors">
@@ -35,12 +35,12 @@ const ContactSection = () => {
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-0.5">Phone</p>
-              <p className="text-sm font-medium text-foreground">+91 98963 50498</p>
+              <p className="text-sm font-medium text-foreground">+91 8949078417</p>
             </div>
           </a>
 
           <a
-            href="https://linkedin.com/in/vaibhav-bansal-iitroorkee"
+            href="https://linkedin.com/in/vaibhav-bansal-354b77153"
             target="_blank"
             rel="noopener noreferrer"
             className="animate-on-scroll stagger-3 bg-card border border-border rounded-xl p-6 flex items-center gap-4 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1 group"
