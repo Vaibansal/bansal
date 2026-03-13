@@ -1,4 +1,4 @@
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Download } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -14,7 +14,7 @@ const HeroSection = () => {
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <p className="text-reveal text-sm tracking-[0.3em] uppercase text-muted-foreground font-medium mb-6">
-          Welcome to my world
+          Product Manager · Strategy &amp; Operations · Founder · Executive Operator
         </p>
 
         <h1 className="text-reveal text-reveal-delay-1 text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-foreground leading-[1.1] mb-6">
@@ -23,12 +23,12 @@ const HeroSection = () => {
           <span className="text-primary">Bansal</span>
         </h1>
 
-        <p className="text-reveal text-reveal-delay-2 text-lg sm:text-xl text-muted-foreground font-light max-w-xl mx-auto mb-4">
-          Product Leader · Founder · Builder
+        <p className="text-reveal text-reveal-delay-2 text-lg sm:text-xl text-muted-foreground font-light max-w-2xl mx-auto mb-4">
+          I build products, scale operations, and help founders execute faster.
         </p>
 
-        <p className="text-reveal text-reveal-delay-3 text-sm text-muted-foreground/70 max-w-md mx-auto mb-10">
-          Driving growth through product strategy, cross-functional leadership, and relentless curiosity.
+        <p className="text-reveal text-reveal-delay-3 text-sm text-muted-foreground/70 max-w-lg mx-auto mb-10">
+          From building $17M ARR products to leading AI-driven automation initiatives, my work sits at the intersection of product, growth, and execution.
         </p>
 
         <div className="text-reveal text-reveal-delay-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -40,9 +40,10 @@ const HeroSection = () => {
           </a>
           <a
             href="#contact"
-            className="px-8 py-3 border border-border text-foreground rounded-full text-sm font-medium hover:bg-secondary transition-all hover:-translate-y-0.5"
+            className="px-8 py-3 border border-border text-foreground rounded-full text-sm font-medium hover:bg-secondary transition-all hover:-translate-y-0.5 inline-flex items-center gap-2"
           >
-            Get In Touch
+            <Download size={16} />
+            Download Resume
           </a>
         </div>
       </div>
