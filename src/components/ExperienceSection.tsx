@@ -1,43 +1,44 @@
-import { Briefcase } from 'lucide-react';
+import { Briefcase } from "lucide-react";
 
 const experiences = [
   {
-    company: 'UnifyApps',
-    role: 'Senior Product Manager',
-    period: 'Aug 2024 – Present',
-    location: 'Hyderabad',
-    description: 'Led product initiatives focused on AI-driven automation and enterprise product demonstrations.',
+    company: "UnifyApps",
+    role: "Senior Product Manager",
+    period: "Oct 2024 – Present",
+    location: "Gurugram",
+    description: "Led product initiatives focused on AI-driven automation and enterprise product demonstrations.",
     highlights: [
-      'Built an automated demo creation system reducing delivery time by 47%',
-      'Helped generate $450K in new ARR through enterprise product demonstrations',
-      'Worked with integrations across 400+ connectors and 60+ UI components',
-      'Collaborated closely with sales teams to accelerate enterprise deal cycles',
+      "Built an automated demo creation system reducing delivery time by 47%",
+      "Helped generate $450K in new ARR through enterprise product demonstrations",
+      "Worked with integrations across 400+ connectors and 60+ UI components",
+      "Collaborated closely with sales teams to accelerate enterprise deal cycles",
     ],
   },
   {
-    company: 'Sprinklr',
-    role: 'Product Manager → Senior Product Analyst',
-    period: 'Jun 2021 – Aug 2024',
-    location: 'Gurugram',
-    description: 'Worked on digital customer care and experience management platforms used by large global enterprises.',
+    company: "Sprinklr",
+    role: "Product Manager → Senior Product Analyst",
+    period: "Jun 2021 – Oct 2024",
+    location: "Gurugram",
+    description:
+      "Worked on digital customer care and experience management platforms used by large global enterprises.",
     highlights: [
-      'Led product initiatives generating $17M ARR',
-      'Improved user productivity by 20%',
-      'Reduced support tickets by 25% through product improvements',
-      'Built standardized user personas to improve product adoption across 15K+ users',
+      "Led product initiatives generating $17M ARR",
+      "Improved user productivity by 20%",
+      "Reduced support tickets by 25% through product improvements",
+      "Built standardized user personas to improve product adoption across 15K+ users",
     ],
   },
   {
-    company: 'TBS Planet Comics',
-    role: 'Founder',
-    period: '2019 – 2022',
-    location: 'IIT Roorkee',
-    description: 'Founded an IIT Roorkee incubated comics venture focused on digital storytelling.',
+    company: "TBS Planet Comics",
+    role: "Founder",
+    period: "2019 – 2021",
+    location: "IIT Roorkee",
+    description: "Founded an IIT Roorkee incubated comics venture focused on digital storytelling.",
     highlights: [
-      'Managed 5 simultaneous projects with artists and studios',
-      'Built a network of 500+ campus ambassadors',
-      'Grew a digital subscriber base to 6000+ users',
-      'Created vernacular comics available in six languages',
+      "Managed 5 simultaneous projects with artists and studios",
+      "Built a network of 500+ campus ambassadors",
+      "Grew a digital subscriber base to 6000+ users",
+      "Created vernacular comics available in six languages",
     ],
   },
 ];
@@ -59,7 +60,7 @@ const ExperienceSection = () => {
             <div
               key={index}
               className={`relative flex flex-col md:flex-row items-start mb-16 last:mb-0 ${
-                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
               {/* Timeline dot */}
@@ -68,17 +69,13 @@ const ExperienceSection = () => {
               {/* Content card */}
               <div
                 className={`ml-14 md:ml-0 md:w-[calc(50%-2rem)] ${
-                  index % 2 === 0
-                    ? 'animate-on-scroll-left md:pr-8'
-                    : 'animate-on-scroll-right md:pl-8'
+                  index % 2 === 0 ? "animate-on-scroll-left md:pr-8" : "animate-on-scroll-right md:pl-8"
                 } stagger-${index + 1}`}
               >
                 <div className="bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1">
                   <div className="flex items-center gap-2 mb-2">
                     <Briefcase size={16} className="text-primary" />
-                    <span className="text-xs font-medium text-primary tracking-wider uppercase">
-                      {exp.period}
-                    </span>
+                    <span className="text-xs font-medium text-primary tracking-wider uppercase">{exp.period}</span>
                   </div>
                   <h3 className="font-serif text-xl font-semibold text-foreground mb-1">{exp.company}</h3>
                   <p className="text-sm text-muted-foreground mb-1">{exp.role}</p>
