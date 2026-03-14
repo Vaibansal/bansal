@@ -4,7 +4,6 @@ const experiences = [
   {
     company: "UnifyApps",
     role: "Senior Product Manager",
-    period: "Oct 2024 – Present",
     location: "Gurugram",
     description: "Led product initiatives focused on AI-driven automation and enterprise product demonstrations.",
     highlights: [
@@ -17,7 +16,6 @@ const experiences = [
   {
     company: "Sprinklr",
     role: "Product Manager → Senior Product Analyst",
-    period: "Jun 2021 – Oct 2024",
     location: "Gurugram",
     description:
       "Worked on digital customer care and experience management platforms used by large global enterprises.",
@@ -31,7 +29,6 @@ const experiences = [
   {
     company: "TBS Planet Comics",
     role: "Founder",
-    period: "2019 – 2021",
     location: "IIT Roorkee",
     description: "Founded an IIT Roorkee incubated comics venture focused on digital storytelling.",
     highlights: [
