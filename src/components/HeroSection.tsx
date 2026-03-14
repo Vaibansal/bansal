@@ -1,11 +1,8 @@
-import { ArrowDown, Download } from 'lucide-react';
+import { ArrowDown, Download } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Subtle background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
@@ -28,7 +25,8 @@ const HeroSection = () => {
         </p>
 
         <p className="text-reveal text-reveal-delay-3 text-sm text-muted-foreground/70 max-w-lg mx-auto mb-10">
-          From building $17M ARR products to leading AI-driven automation initiatives, my work sits at the intersection of product, growth, and execution.
+          From building $21M+ ARR products to leading AI-driven automation initiatives, my work sits at the intersection
+          of product, growth, and execution.
         </p>
 
         <div className="text-reveal text-reveal-delay-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -49,10 +47,7 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll indicator */}
-      <a
-        href="#about"
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground/50 animate-bounce"
-      >
+      <a href="#about" className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground/50 animate-bounce">
         <ArrowDown size={20} />
       </a>
     </section>
