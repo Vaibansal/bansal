@@ -1,4 +1,4 @@
-import { Mail, Phone, Linkedin, MapPin } from 'lucide-react';
+import { Mail, Phone, Linkedin, MapPin } from "lucide-react";
 
 const ContactSection = () => {
   return (
@@ -8,7 +8,8 @@ const ContactSection = () => {
           <p className="text-sm tracking-[0.2em] uppercase text-primary font-medium mb-3">Let's Connect</p>
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground mb-4">Get In Touch</h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            I'm always open to discussing product management, operations, new opportunities, or just having a great conversation.
+            I'm always open to discussing product management, operations, new opportunities, or just having a great
+            conversation.
           </p>
         </div>
 
@@ -18,7 +19,10 @@ const ContactSection = () => {
             className="animate-on-scroll stagger-1 bg-card border border-border rounded-xl p-6 flex items-center gap-4 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1 group"
           >
             <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors">
-              <Mail size={20} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
+              <Mail
+                size={20}
+                className="text-accent-foreground group-hover:text-primary-foreground transition-colors"
+              />
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-0.5">Email</p>
@@ -31,7 +35,10 @@ const ContactSection = () => {
             className="animate-on-scroll stagger-2 bg-card border border-border rounded-xl p-6 flex items-center gap-4 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1 group"
           >
             <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors">
-              <Phone size={20} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
+              <Phone
+                size={20}
+                className="text-accent-foreground group-hover:text-primary-foreground transition-colors"
+              />
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-0.5">Phone</p>
@@ -46,7 +53,10 @@ const ContactSection = () => {
             className="animate-on-scroll stagger-3 bg-card border border-border rounded-xl p-6 flex items-center gap-4 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1 group"
           >
             <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors">
-              <Linkedin size={20} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
+              <Linkedin
+                size={20}
+                className="text-accent-foreground group-hover:text-primary-foreground transition-colors"
+              />
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-0.5">LinkedIn</p>
@@ -60,7 +70,7 @@ const ContactSection = () => {
             </div>
             <div>
               <p className="text-xs text-muted-foreground mb-0.5">Location</p>
-              <p className="text-sm font-medium text-foreground">Hyderabad, India</p>
+              <p className="text-sm font-medium text-foreground">Gurugram, India</p>
             </div>
           </div>
         </div>
