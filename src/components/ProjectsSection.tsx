@@ -1,29 +1,36 @@
-import { Users, BookOpen, Cpu } from 'lucide-react';
+import { Users, BookOpen, Cpu } from "lucide-react";
 
 const projects = [
   {
-    title: 'Persona Customer 360 Platform',
+    title: "Persona Customer 360 Platform",
     description:
-      'Built a product integrating 10+ systems to provide agents a single view of customer information for faster query resolution.',
-    impact: ['Faster customer support response times', 'Improved service-level metrics', 'Better customer experience for enterprise clients'],
+      "Built a product integrating 10+ systems to provide agents a single view of customer information for faster query resolution.",
+    impact: [
+      "Faster customer support response times",
+      "Improved service-level metrics",
+      "Better conversion to cross-sell / up-sell",
+    ],
     icon: Users,
-    tags: ['Enterprise SaaS', 'Platform', 'Customer Care'],
+    tags: ["Enterprise SaaS", "Platform", "Customer Care"],
   },
   {
-    title: 'AI Demo Automation System',
-    description:
-      'Developed an automation system that allows enterprise teams to quickly generate customized product demos.',
-    impact: ['Reduced demo creation time by nearly 50%', 'Enabled faster sales cycles', 'Improved enterprise conversion rates'],
+    title: "AI Powered CLM Solution",
+    description: "Developed an enhanced system that allows enterprise teams to manage contracts' lifecycle.",
+    impact: [
+      "Reduced negotiation and execution time",
+      "Enabled faster query and historical data",
+      "Improved lawyer bandwidth",
+    ],
     icon: Cpu,
-    tags: ['AI/ML', 'Automation', 'Sales Enablement'],
+    tags: ["AI/ML", "Automation", "Sales Enablement"],
   },
   {
-    title: 'Vernacular Comics Platform',
+    title: "Vernacular Comics Platform",
     description:
-      'Led the development of a multilingual digital comics platform with content available in six languages.',
-    impact: ['Expanded audience reach', 'Built a strong creator network', 'Enabled scalable content distribution'],
+      "Led the development of a multilingual digital comics platform with content available in six languages.",
+    impact: ["Expanded audience reach", "Built a strong creator network", "Enabled scalable content distribution"],
     icon: BookOpen,
-    tags: ['Entrepreneurship', 'Content', 'Product'],
+    tags: ["Entrepreneurship", "Content", "Product"],
   },
 ];
 
@@ -40,10 +47,7 @@ const ProjectsSection = () => {
           {projects.map((project, index) => {
             const Icon = project.icon;
             return (
-              <div
-                key={project.title}
-                className={`animate-on-scroll-scale stagger-${index + 1} group`}
-              >
+              <div key={project.title} className={`animate-on-scroll-scale stagger-${index + 1} group`}>
                 <div className="bg-card border border-border rounded-2xl p-7 h-full hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full transition-all duration-500 group-hover:w-32 group-hover:h-32" />
 
