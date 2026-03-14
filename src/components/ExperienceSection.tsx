@@ -72,7 +72,7 @@ const ExperienceSection = () => {
                 <div className="bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1">
                   <div className="flex items-center gap-2 mb-2">
                     <Briefcase size={16} className="text-primary" />
-                    <span className="text-xs font-medium text-primary tracking-wider uppercase">{exp.period}</span>
+                    <span className="text-xs font-medium text-primary tracking-wider uppercase">{exp.company}</span>
                   </div>
                   <h3 className="font-serif text-xl font-semibold text-foreground mb-1">{exp.company}</h3>
                   <p className="text-sm text-muted-foreground mb-1">{exp.role}</p>
