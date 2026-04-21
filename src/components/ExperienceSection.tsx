@@ -28,9 +28,9 @@ const experiences = [
   },
   {
     company: "TBS Planet Comics",
-    role: "Founder",
+    role: "Founding Member",
     location: "IIT Roorkee",
-    description: "Founded an IIT Roorkee incubated comics venture focused on digital storytelling.",
+    description: "An IIT Roorkee incubated comics venture focused on digital storytelling.",
     highlights: [
       "Managed 5 simultaneous projects with artists and studios",
       "Built a network of 500+ campus ambassadors",
