@@ -33,7 +33,7 @@ const featured = [
       "Generates on-air hook, taglines, comps, slot & SEO keywords",
     ],
     tags: ["Agentic AI", "OCR", "Claude", "Pinecone", "Human-in-loop"],
-    cta: { label: "Read the one-pager", href: "/broadcast-content-ops-agent.pdf" },
+    cta: { label: "Open interactive demo", href: "/content-ops-intake-agent.html" },
   },
   {
     number: "03",
@@ -42,7 +42,7 @@ const featured = [
     title: "AI-Powered CLM Solution",
     subtitle: "An AI-enhanced contract lifecycle platform that compresses negotiation and execution time for enterprise legal teams.",
     description:
-      "Reimagined contract lifecycle management with an AI copilot at its core. Enables legal teams to query contracts in natural language, surface historical clauses instantly, and accelerate redlining. Built as a live prototype for ChargePoint — showcasing how agentic workflows can reclaim lawyer bandwidth while keeping compliance airtight.",
+      "Reimagined contract lifecycle management with an AI copilot at its core. Enables legal teams to query contracts in natural language, surface historical clauses instantly, and accelerate redlining. A live prototype showcasing how agentic workflows can reclaim lawyer bandwidth while keeping compliance airtight.",
     highlights: [
       "Natural-language query across contract repositories",
       "AI-assisted redlining & clause suggestions",
@@ -50,7 +50,7 @@ const featured = [
       "Improved lawyer bandwidth & reduced turn-around time",
     ],
     tags: ["Enterprise AI", "CLM", "LLM Workflows", "Legal Tech"],
-    cta: { label: "Open live demo", href: "https://chargepoint-clm-demo.vercel.app/", external: true },
+    cta: { label: "Open live demo", href: "https://legal-clm.vercel.app/", external: true },
   },
 ];
 
