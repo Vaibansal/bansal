@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import WhatIDoSection from '@/components/WhatIDoSection';
+import FeaturedProjectsSection from '@/components/FeaturedProjectsSection';
 import ExperienceSection from '@/components/ExperienceSection';
 import EASection from '@/components/EASection';
 import ProjectsSection from '@/components/ProjectsSection';
@@ -18,6 +19,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <AboutSection />
+      <FeaturedProjectsSection />
       <WhatIDoSection />
       <ExperienceSection />
       <EASection />
@@ -30,3 +32,4 @@ const Index = () => {
 };
 
 export default Index;
+
