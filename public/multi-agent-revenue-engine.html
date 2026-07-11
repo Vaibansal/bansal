@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The 20-Agent Revenue Engine — end-to-end multi-agent system, acquisition to retention.">
+<title>The 20-Agent Revenue Engine</title>
+<style>
+  :root{
+    --ground:#0C1117;
+    --ground-2:#0F1620;
+    --panel:#141E29;
+    --panel-2:#1A2634;
+    --line:#233343;
+    --line-2:#31485E;
+    --ink:#DCE5EE;
+    --ink-dim:#93A5B7;
+    --ink-faint:#5F7183;
+    --gold:#F3B24A;
+    --gold-soft:rgba(243,178,74,.13);
+    --gold-line:rgba(243,178,74,.38);
+    --teal:#3CC3D1;
+    --teal-soft:rgba(60,195,209,.12);
+    --teal-line:rgba(60,195,209,.40);
+    --steel:#8195A9;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  .wrap{
+    background:
+      radial-gradient(1100px 520px at 15% -8%, rgba(243,178,74,.06), transparent 60%),
+      radial-gradient(900px 500px at 92% 4%, rgba(60,195,209,.07), transparent 62%),
+      var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    padding:clamp(20px,4vw,52px);
+    min-height:100%;
+    -webkit-font-smoothing:antialiased;
+  }
+  .inner{max-width:1360px;margin:0 auto}
+
+  /* ---------- header ---------- */
+  .eyebrow{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold);margin:0 0 14px;display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold-line)}
+  .title{
+    font-size:clamp(1.9rem,3.6vw,2.9rem);line-height:1.04;letter-spacing:-.02em;
+    font-weight:700;margin:0;text-wrap:balance;max-width:20ch;
+  }
+  .title em{font-style:normal;color:var(--gold)}
+  .lede{
+    margin:16px 0 0;max-width:60ch;color:var(--ink-dim);font-size:1.02rem;
+  }
+  .stats{
+    display:flex;flex-wrap:wrap;gap:0;margin:26px 0 4px;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--ground-2));
+  }
+  .stat{padding:16px 22px;flex:1 1 170px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:0}
+  .stat b{display:block;font-family:var(--mono);font-size:1.28rem;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .stat span{display:block;font-size:.74rem;color:var(--ink-faint);margin-top:5px;text-transform:uppercase;letter-spacing:.08em}
+  .stat b .u{color:var(--teal)}
+
+  /* ---------- section label ---------- */
+  .band-label{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-faint);margin:44px 0 14px;display:flex;align-items:center;gap:12px;
+  }
+  .band-label::after{content:"";flex:1;height:1px;background:var(--line)}
+  .band-label .k{color:var(--teal)}
+
+  /* ---------- pipeline ---------- */
+  .pipeline{overflow-x:auto;padding-bottom:10px;margin:0 -4px;scrollbar-width:thin}
+  .track{display:flex;align-items:stretch;gap:0;min-width:min-content;padding:2px 4px}
+
+  .cap{
+    flex:0 0 148px;border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;
+    justify-content:center;text-align:center;
+  }
+  .cap--in{background:var(--gold-soft);border:1px solid var(--gold-line)}
+  .cap--out{background:var(--teal-soft);border:1px solid var(--teal-line)}
+  .cap .cap-k{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+  .cap--in .cap-k{color:var(--gold)}
+  .cap--out .cap-k{color:var(--teal)}
+  .cap h4{margin:0 0 6px;font-size:.98rem}
+  .cap p{margin:0;font-size:.76rem;color:var(--ink-dim);line-height:1.45}
+
+  .flow{flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:var(--line-2)}
+  .flow svg{width:20px;height:20px}
+
+  .stage{flex:0 0 216px;display:flex;flex-direction:column;gap:10px}
+  .stage__head{padding:2px 4px 8px;border-bottom:1px solid var(--line);margin-bottom:2px}
+  .stage__idx{font-family:var(--mono);font-size:.72rem;color:var(--gold);letter-spacing:.15em}
+  .stage__head h3{margin:3px 0 2px;font-size:1.06rem;letter-spacing:-.01em}
+  .stage__head p{margin:0;font-size:.72rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.07em}
+  .stage__agents{display:flex;flex-direction:column;gap:10px}
+
+  /* ---------- agent card ---------- */
+  .agent{
+    background:linear-gradient(180deg,var(--panel-2),var(--panel));
+    border:1px solid var(--line);border-radius:11px;padding:13px 14px 12px;
+    position:relative;transition:border-color .18s ease,transform .18s ease;
+  }
+  .agent:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .agent__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+  .agent__num{
+    font-family:var(--mono);font-size:.72rem;color:var(--ink-faint);letter-spacing:.12em;
+    border:1px solid var(--line);border-radius:5px;padding:2px 7px;
+  }
+  .tier{
+    font-family:var(--mono);font-size:.62rem;font-weight:600;width:19px;height:19px;border-radius:50%;
+    display:grid;place-items:center;letter-spacing:0;
+  }
+  .tier--s{color:#0C1117;background:var(--steel)}
+  .tier--g{color:#0C1117;background:var(--teal)}
+  .tier--e{color:#0C1117;background:var(--gold)}
+  .agent__name{margin:0 0 5px;font-size:.94rem;letter-spacing:-.01em;font-weight:650}
+  .agent__fn{margin:0 0 11px;font-size:.785rem;color:var(--ink-dim);line-height:1.42}
+  .agent__meta{margin:0;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:9px}
+  .agent__meta div{display:flex;align-items:baseline;gap:8px}
+  .agent__meta dt{
+    font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;
+    color:var(--ink-faint);flex:0 0 40px;
+  }
+  .agent__meta dd{margin:0;font-family:var(--mono);font-size:.72rem;color:var(--ink);line-height:1.3}
+  .agent__meta .m dd{color:var(--gold)}
+
+  /* ---------- orchestrator spine ---------- */
+  .spine{
+    margin-top:16px;border:1px solid var(--teal-line);border-radius:12px;
+    background:
+      radial-gradient(600px 120px at 50% 0%, rgba(60,195,209,.14), transparent 70%),
+      linear-gradient(180deg,var(--panel-2),var(--ground-2));
+    padding:18px 22px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 26px;
+  }
+  .spine__id{display:flex;align-items:center;gap:14px;flex:0 0 auto}
+  .spine__num{
+    font-family:var(--mono);font-weight:700;font-size:1.1rem;color:#0C1117;background:var(--teal);
+    width:40px;height:40px;border-radius:9px;display:grid;place-items:center;
+  }
+  .spine__id h3{margin:0;font-size:1.12rem;letter-spacing:-.01em}
+  .spine__id .role{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+  .spine__desc{flex:1 1 320px;margin:0;color:var(--ink-dim);font-size:.86rem;min-width:260px}
+  .spine__desc strong{color:var(--ink);font-weight:600}
+  .spine__meta{display:flex;gap:22px;flex:0 0 auto}
+  .spine__meta div{display:flex;flex-direction:column;gap:3px}
+  .spine__meta dt{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint)}
+  .spine__meta dd{margin:0;font-family:var(--mono);font-size:.8rem;color:var(--teal)}
+
+  /* ---------- ops lane ---------- */
+  .ops{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:11px;
+  }
+
+  /* ---------- infra rail ---------- */
+  .infra{
+    margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--ground-2);
+    padding:16px 18px;
+  }
+  .infra__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border-radius:8px;overflow:hidden}
+  .chip{background:var(--panel);padding:12px 14px}
+  .chip .layer{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+  .chip .tool{font-family:var(--mono);font-size:.86rem;color:var(--ink);margin-top:4px}
+  .infra__note{margin:12px 2px 0;font-size:.78rem;color:var(--ink-dim)}
+  .infra__note b{color:var(--gold);font-family:var(--mono)}
+
+  /* ---------- legend / tiers ---------- */
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+  .tcard{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--panel);position:relative}
+  .tcard::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px}
+  .tcard.s::before{background:var(--steel)}
+  .tcard.g::before{background:var(--teal)}
+  .tcard.e::before{background:var(--gold)}
+  .tcard .th{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+  .tcard .tn{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase}
+  .tcard.s .tn{color:var(--steel)}.tcard.g .tn{color:var(--teal)}.tcard.e .tn{color:var(--gold)}
+  .tcard .cnt{font-family:var(--mono);font-size:.72rem;color:var(--ink-faint)}
+  .tcard .price{font-family:var(--mono);font-size:1.12rem;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .tcard .price span{font-size:.72rem;color:var(--ink-faint)}
+  .tcard p{margin:8px 0 0;font-size:.78rem;color:var(--ink-dim);line-height:1.45}
+  .tag{font-family:var(--mono);font-size:.62rem;padding:2px 7px;border-radius:20px;border:1px solid var(--teal-line);color:var(--teal);white-space:nowrap}
+
+  footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:baseline}
+  footer .src{font-family:var(--mono);font-size:.72rem;color:var(--ink-faint)}
+  footer .note{font-size:.74rem;color:var(--ink-faint);max-width:52ch}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body style="margin:0;padding:0">
+<div class="wrap">
+ <div class="inner">
+
+  <p class="eyebrow">Multi-Agent Infrastructure &middot; D2C / B2C Revenue Engine</p>
+  <h1 class="title">20 agents that run a <em>revenue lifecycle</em> end-to-end, 24/7.</h1>
+  <p class="lede">A single orchestrated system, not a pile of chatbots. A stranger enters at acquisition and leaves as a retained customer &mdash; every stage in between owned by an agent that never sleeps, never quits, and improves every month.</p>
+
+  <div class="stats">
+    <div class="stat"><b>20</b><span>Autonomous agents</span></div>
+    <div class="stat"><b>24 / 7 / 365</b><span>Always-on operation</span></div>
+    <div class="stat"><b>8&ndash;10<span class="u"> roles</span></b><span>Output replaced</span></div>
+    <div class="stat"><b>6</b><span>Lifecycle stages</span></div>
+    <div class="stat"><b>1</b><span>Orchestrated system</span></div>
+  </div>
+
+  <!-- ============ PIPELINE ============ -->
+  <p class="band-label"><span class="k">Flow</span> &nbsp;The customer journey &mdash; left to right</p>
+
+  <div class="pipeline">
+   <div class="track">
+
+    <div class="cap cap--in">
+      <span class="cap-k">Inbound</span>
+      <h4>Cold traffic</h4>
+      <p>Paid ads, website, forms &amp; lists enter here</p>
+    </div>
+
+    <div class="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+
+    <!-- Stage 1 -->
+    <section class="stage">
+      <header class="stage__head"><span class="stage__idx">STAGE 01</span><h3>Acquire</h3><p>Fill the funnel</p></header>
+      <div class="stage__agents">
+        <article class="agent"><div class="agent__top"><span class="agent__num">01</span></div><h4 class="agent__name">Lead Scout</h4><p class="agent__fn">Scrapes, qualifies &amp; scores inbound leads against your ICP.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Clay + GPT&#8209;4o</dd></div><div class="m"><dt>Moves</dt><dd>Qualified leads / day</dd></div></dl></article>
+        <article class="agent"><div class="agent__top"><span class="agent__num">02</span></div><h4 class="agent__name">Outreach</h4><p class="agent__fn">Sends personalized cold outreach across email &amp; LinkedIn.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Instantly + Claude</dd></div><div class="m"><dt>Moves</dt><dd>Reply rate</dd></div></dl></article>
+        <article class="agent"><div class="agent__top"><span class="agent__num">03</span></div><h4 class="agent__name">Follow-Up</h4><p class="agent__fn">Runs multi-touch follow-up sequences automatically.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Lemlist + Zapier</dd></div><div class="m"><dt>Moves</dt><dd>Meeting bookings</dd></div></dl></article>
+      </div>
+    </section>
+
+    <div class="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+
+    <!-- Stage 2 -->
+    <section class="stage">
+      <header class="stage__head"><span class="stage__idx">STAGE 02</span><h3>Convert</h3><p>Turn interest into revenue</p></header>
+      <div class="stage__agents">
+        <article class="agent"><div class="agent__top"><span class="agent__num">04</span></div><h4 class="agent__name">SDR</h4><p class="agent__fn">Runs qualification &amp; discovery calls by voice.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Bland.ai / Vapi</dd></div><div class="m"><dt>Moves</dt><dd>SQL conversion</dd></div></dl></article>
+        <article class="agent"><div class="agent__top"><span class="agent__num">05</span></div><h4 class="agent__name">Closer</h4><p class="agent__fn">Sends proposals, handles objections by chat &amp; email.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Claude + HubSpot</dd></div><div class="m"><dt>Moves</dt><dd>Close rate</dd></div></dl></article>
+        <article class="agent"><div class="agent__top"><span class="agent__num">08</span></div><h4 class="agent__name">CRM Manager</h4><p class="agent__fn">Keeps CRM clean, tags contacts, advances deal stages.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>HubSpot / SFDC</dd></div><div class="m"><dt>Moves</dt><dd>CRM data accuracy</dd></div></dl></article>
+      </div>
+    </section>
+
+    <div class="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+
+    <!-- Stage 3 -->
+    <section class="stage">
+      <header class="stage__head"><span class="stage__idx">STAGE 03</span><h3>Onboard &amp; Bill</h3><p>Convert cash &amp; capture</p></header>
+      <div class="stage__agents">
+        <article class="agent"><div class="agent__top"><span class="agent__num">06</span></div><h4 class="agent__name">Onboarding</h4><p class="agent__fn">Guides new clients through setup &amp; collects assets.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Typeform + Slack</dd></div><div class="m"><dt>Moves</dt><dd>Time-to-onboard</dd></div></dl></article>
+        <article class="agent"><div class="agent__top"><span class="agent__num">07</span></div><h4 class="agent__name">Invoice</h4><p class="agent__fn">Generates &amp; sends invoices, chases unpaid dues.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Stripe + Make.com</dd></div><div class="m"><dt>Moves</dt><dd>Days sales outstanding</dd></div></dl></article>
+      </div>
+    </section>
+
+    <div class="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+
+    <!-- Stage 4 -->
+    <section class="stage">
+      <header class="stage__head"><span class="stage__idx">STAGE 04</span><h3>Support</h3><p>Keep customers happy</p></header>
+      <div class="stage__agents">
+        <article class="agent"><div class="agent__top"><span class="agent__num">09</span></div><h4 class="agent__name">Support</h4><p class="agent__fn">Handles L1 customer queries 24/7 across every channel.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Intercom + Claude</dd></div><div class="m"><dt>Moves</dt><dd>CSAT score</dd></div></dl></article>
+        <article class="agent"><div class="agent__top"><span class="agent__num">10</span></div><h4 class="agent__name">Escalation</h4><p class="agent__fn">Detects frustrated customers &amp; routes them to humans.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Sentiment + Slack</dd></div><div class="m"><dt>Moves</dt><dd>Escalation rate</dd></div></dl></article>
+      </div>
+    </section>
+
+    <div class="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+
+    <!-- Stage 5 -->
+    <section class="stage">
+      <header class="stage__head"><span class="stage__idx">STAGE 05</span><h3>Grow</h3><p>Expand each account</p></header>
+      <div class="stage__agents">
+        <article class="agent"><div class="agent__top"><span class="agent__num">11</span></div><h4 class="agent__name">Review</h4><p class="agent__fn">Requests reviews post-purchase, routes 5-stars public.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Yotpo + Make.com</dd></div><div class="m"><dt>Moves</dt><dd>Review volume</dd></div></dl></article>
+        <article class="agent"><div class="agent__top"><span class="agent__num">12</span></div><h4 class="agent__name">Cart Recovery</h4><p class="agent__fn">Fires personalized recovery flows for abandoned carts.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Klaviyo + GPT&#8209;4o</dd></div><div class="m"><dt>Moves</dt><dd>Recovery rate</dd></div></dl></article>
+        <article class="agent"><div class="agent__top"><span class="agent__num">13</span></div><h4 class="agent__name">Upsell</h4><p class="agent__fn">Spots upsell moments &amp; triggers relevant offers.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Klaviyo + Claude</dd></div><div class="m"><dt>Moves</dt><dd>Average order value</dd></div></dl></article>
+      </div>
+    </section>
+
+    <div class="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+
+    <!-- Stage 6 -->
+    <section class="stage">
+      <header class="stage__head"><span class="stage__idx">STAGE 06</span><h3>Retain</h3><p>Stop the churn</p></header>
+      <div class="stage__agents">
+        <article class="agent"><div class="agent__top"><span class="agent__num">14</span></div><h4 class="agent__name">Retention</h4><p class="agent__fn">Re-engages churning customers with win-back campaigns.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Braze + Claude</dd></div><div class="m"><dt>Moves</dt><dd>Churn rate</dd></div></dl></article>
+      </div>
+    </section>
+
+    <div class="flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+
+    <div class="cap cap--out">
+      <span class="cap-k">Outcome</span>
+      <h4>Retained customer</h4>
+      <p>Recurring revenue, higher LTV, public advocacy</p>
+    </div>
+
+   </div>
+  </div>
+
+  <!-- ============ ORCHESTRATOR ============ -->
+  <p class="band-label"><span class="k">Control</span> &nbsp;The layer that makes it a system, not a stack</p>
+  <div class="spine">
+    <div class="spine__id">
+      <span class="spine__num">20</span>
+      <div><span class="role">Orchestrator</span><h3>The Conductor</h3></div>
+    </div>
+    <p class="spine__desc"><strong>Routes tasks between all 19 agents, resolves conflicts, and escalates to humans.</strong> It reads a routing table, dispatches every event to the right agent, and turns parallel tools into one system that thinks. Without it, you have 19 automations. With it, you have infrastructure.</p>
+    <dl class="spine__meta">
+      <div><dt>Tool</dt><dd>n8n / LangGraph</dd></div>
+      <div><dt>Metric</dt><dd>System uptime</dd></div>
+    </dl>
+  </div>
+
+  <!-- ============ OPS LANE ============ -->
+  <p class="band-label"><span class="k">Cross-cutting</span> &nbsp;Intelligence &amp; ops &mdash; feeding every stage</p>
+  <div class="ops">
+    <article class="agent"><div class="agent__top"><span class="agent__num">15</span></div><h4 class="agent__name">Content</h4><p class="agent__fn">Drafts emails, captions &amp; ad copy from briefs.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Claude + Notion</dd></div><div class="m"><dt>Moves</dt><dd>Content output / week</dd></div></dl></article>
+    <article class="agent"><div class="agent__top"><span class="agent__num">16</span></div><h4 class="agent__name">Social Listening</h4><p class="agent__fn">Monitors brand mentions &amp; competitor activity.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Brandwatch + Zapier</dd></div><div class="m"><dt>Moves</dt><dd>Share of voice</dd></div></dl></article>
+    <article class="agent"><div class="agent__top"><span class="agent__num">17</span></div><h4 class="agent__name">Analytics</h4><p class="agent__fn">Pulls weekly reports &amp; surfaces key insights.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>GA4 + Looker + Claude</dd></div><div class="m"><dt>Moves</dt><dd>Report delivery time</dd></div></dl></article>
+    <article class="agent"><div class="agent__top"><span class="agent__num">18</span></div><h4 class="agent__name">Ad Optimization</h4><p class="agent__fn">Watches paid campaigns, pauses underperformers automatically.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Meta API + GPT&#8209;4o</dd></div><div class="m"><dt>Moves</dt><dd>ROAS improvement</dd></div></dl></article>
+    <article class="agent"><div class="agent__top"><span class="agent__num">19</span></div><h4 class="agent__name">Inventory</h4><p class="agent__fn">Tracks stock levels &amp; triggers reorder alerts.</p><dl class="agent__meta"><div><dt>Tool</dt><dd>Shopify + Make.com</dd></div><div class="m"><dt>Moves</dt><dd>Stockout incidents</dd></div></dl></article>
+  </div>
+
+  <!-- ============ INFRA ============ -->
+  <p class="band-label"><span class="k">Foundation</span> &nbsp;The infrastructure every agent sits on</p>
+  <div class="infra">
+    <div class="infra__grid">
+      <div class="chip"><div class="layer">LLM</div><div class="tool">Anthropic Claude</div></div>
+      <div class="chip"><div class="layer">Orchestration</div><div class="tool">n8n (self-host)</div></div>
+      <div class="chip"><div class="layer">Memory / Vector</div><div class="tool">Pinecone</div></div>
+      <div class="chip"><div class="layer">Database</div><div class="tool">Supabase</div></div>
+      <div class="chip"><div class="layer">Voice</div><div class="tool">Vapi.ai</div></div>
+      <div class="chip"><div class="layer">Monitoring</div><div class="tool">LangSmith</div></div>
+    </div>
+    <p class="infra__note">Every agent runs on <b>one shared, observable stack</b> &mdash; persistent memory, full call tracing, and a single control plane, so the system is debuggable and scales without re-platforming.</p>
+  </div>
+
+  <footer>
+    <span class="src">The Multi-Agent System Blueprint &mdash; full revenue lifecycle, awareness to retention</span>
+    <span class="note">Deploy the agents that solve your biggest bottleneck first, then expand across the lifecycle.</span>
+  </footer>
+
+ </div>
+</div>
+</body>
+</html>
