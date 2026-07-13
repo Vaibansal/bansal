@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'AI Work', href: '#featured-projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '#about', num: '01' },
+  { label: 'AI Work', href: '#featured-projects', num: '02' },
+  { label: 'Experience', href: '#experience', num: '04' },
+  { label: 'Projects', href: '#projects', num: '07' },
+  { label: 'Skills', href: '#skills', num: '08' },
+  { label: 'Contact', href: '#contact', num: '10' },
 ];
 
 const Navbar = () => {
@@ -15,7 +15,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -23,53 +23,52 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-background/90 backdrop-blur-md shadow-sm border-b border-border'
-          : 'bg-transparent'
+        scrolled ? 'bg-paper/90 backdrop-blur-md border-b border-line' : 'bg-transparent'
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a
-          href="#hero"
-          className="font-serif text-xl font-semibold text-foreground tracking-tight hover:text-primary transition-colors"
-        >
-          VB
+        <a href="#hero" className="flex items-center gap-2 group" aria-label="Home">
+          <span className="w-8 h-8 rounded-md bg-ink text-paper font-display font-bold text-sm flex items-center justify-center relative">
+            VB
+            <span className="absolute -bottom-0.5 left-1.5 right-1.5 h-0.5 bg-gold rounded-full" />
+          </span>
         </a>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-primary after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
+              className="group flex items-baseline gap-1.5 text-[13px] font-medium text-dim hover:text-ink transition-colors"
             >
+              <span className="font-mono-plex text-[10px] text-faint group-hover:text-gold transition-colors">
+                {link.num}
+              </span>
               {link.label}
             </a>
           ))}
         </div>
 
-        {/* Mobile toggle */}
         <button
-          className="md:hidden text-foreground"
+          className="md:hidden text-ink"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-md border-b border-border">
+        <div className="md:hidden bg-paper/98 backdrop-blur-md border-b border-line">
           <div className="flex flex-col px-6 py-4 gap-4">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-baseline gap-2 text-sm font-medium text-dim hover:text-ink transition-colors py-2"
               >
+                <span className="font-mono-plex text-[10px] text-faint">{link.num}</span>
                 {link.label}
               </a>
             ))}

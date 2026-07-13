@@ -1,81 +1,50 @@
-import { useCountUp } from "@/hooks/useCountUp";
-
-const stats = [
-  { value: 21, suffix: "M+", prefix: "$", label: "Value Delivered" },
-  { value: 5, suffix: "+", prefix: "", label: "Year of Exp" },
-  { value: 47, suffix: "%", prefix: "", label: "Efficiency Gains" },
-  { value: 600, suffix: "K+", prefix: "", label: "Live Users" },
-];
-
-const StatItem = ({
-  value,
-  suffix,
-  prefix,
-  label,
-}: {
-  value: number;
-  suffix: string;
-  prefix: string;
-  label: string;
-}) => {
-  const { count, ref } = useCountUp(value, 2000);
-  return (
-    <div className="text-center">
-      <span ref={ref} className="block text-3xl sm:text-4xl font-serif font-bold text-primary">
-        {prefix}
-        {count}
-        {suffix}
-      </span>
-      <span className="text-sm text-muted-foreground mt-1 block">{label}</span>
-    </div>
-  );
-};
+import SectionHeader from './SectionHeader';
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-24 px-6">
-      <div className="max-w-5xl mx-auto">
-        <div className="animate-on-scroll mb-6">
-          <p className="text-sm tracking-[0.2em] uppercase text-primary font-medium mb-3">About Me</p>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground">
-            A builder and operator,
-            <br />
-            <span className="text-primary italic">who gets things done.</span>
-          </h2>
-        </div>
+    <section id="about" className="py-16 md:py-20 px-6 bg-paper">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader index="01" label="About" />
 
-        <div className="animate-on-scroll stagger-1 max-w-3xl mb-6">
-          <p className="text-muted-foreground leading-relaxed text-base sm:text-lg mb-4">
-            I am a product and business operator who enjoys building systems, products, and businesses from the ground
-            up. Over the past years, I have worked across product management, growth strategy, operations, and executive
-            support roles.
-          </p>
-          <p className="text-muted-foreground leading-relaxed text-base sm:text-lg mb-4">
-            Currently, I work as a Senior Product Manager at UnifyApps where I lead initiatives focused on AI-driven
-            product experiences and automation. My work involves designing scalable products, integrating multiple
-            systems, and helping enterprise clients understand and adopt complex AI platforms.
-          </p>
-          <p className="text-muted-foreground leading-relaxed text-base sm:text-lg mb-4">
-            Before this, I worked at Sprinklr where I contributed to building and scaling products that generated over
-            $17M in ARR while improving user productivity and reducing operational friction across customer care
-            platforms.
-          </p>
-          <p className="text-muted-foreground leading-relaxed text-base sm:text-lg">
-            Alongside my corporate roles, I have also supported founders and executives globally as an Executive
-            Assistant and strategic operator — managing calendars, communications, sales outreach, and internal
-            operations while acting as a trusted execution partner.
-          </p>
-        </div>
-
-        <div className="animate-on-scroll stagger-2 bg-card border border-border rounded-2xl p-8 mt-12">
-          <p className="text-sm tracking-[0.2em] uppercase text-primary font-medium mb-6 text-center">
-            Impact at a Glance
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat) => (
-              <StatItem key={stat.label} {...stat} />
-            ))}
+        <div className="grid md:grid-cols-[1.6fr_1fr] gap-10 items-start">
+          <div className="animate-on-scroll">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-ink mb-6 leading-tight">
+              A builder and operator, <span className="italic text-gold">who gets things done.</span>
+            </h2>
+            <div className="space-y-4 text-dim max-w-[68ch] text-base leading-relaxed">
+              <p>
+                I am a product and business operator who enjoys building systems, products, and businesses from the
+                ground up. Currently a Senior Product Manager at UnifyApps, I lead initiatives focused on AI-driven
+                product experiences and automation — designing scalable products, integrating multiple systems, and
+                helping enterprise clients adopt complex AI platforms.
+              </p>
+              <p>
+                Before this, I helped build and scale products at Sprinklr that generated over $17M in ARR while
+                improving user productivity across customer care platforms. Alongside corporate roles, I have supported
+                founders globally as a strategic operator — managing communications, sales outreach, and internal
+                operations as a trusted execution partner.
+              </p>
+            </div>
           </div>
+
+          {/* Side card */}
+          <aside className="animate-on-scroll-right card-paper p-6">
+            <p className="eyebrow text-gold mb-3">Currently</p>
+            <p className="font-display text-lg text-ink leading-snug">Senior PM @ UnifyApps</p>
+            <p className="text-sm text-dim mt-1">AI-driven product experiences · Gurugram</p>
+
+            <div className="h-px bg-[hsl(var(--line))] my-5" />
+
+            <p className="eyebrow text-gold mb-3">Previously</p>
+            <ul className="space-y-2 text-sm text-ink">
+              <li className="flex items-baseline gap-2">
+                <span className="w-1.5 h-1.5 bg-gold rounded-full" /> Sprinklr — Product Manager
+              </li>
+              <li className="flex items-baseline gap-2">
+                <span className="w-1.5 h-1.5 bg-gold rounded-full" /> TBS Planet Comics — Co-founded
+              </li>
+            </ul>
+          </aside>
         </div>
       </div>
     </section>
