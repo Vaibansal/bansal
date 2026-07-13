@@ -1,4 +1,5 @@
-import { ArrowDown, Download, Upload } from 'lucide-react';
+import { ArrowDown, Download } from 'lucide-react';
+import portrait from '@/assets/portrait.jpeg.asset.json';
 
 const heroStats = [
   { num: '$21M+', label: 'Value delivered' },
@@ -53,18 +54,15 @@ const HeroSection = () => {
                 className="w-full max-w-[320px] aspect-[4/5] rounded-2xl border border-gold overflow-hidden relative"
                 style={{ background: 'hsl(var(--paper-2))' }}
               >
-                {/* placeholder illustration */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="font-display text-8xl font-bold text-ink/15 leading-none">VB</div>
-                    <div className="eyebrow text-faint mt-4 flex items-center justify-center gap-1.5">
-                      <Upload size={11} /> Portrait pending
-                    </div>
-                  </div>
-                </div>
+                <img
+                  src={portrait.url}
+                  alt="Vaibhav Bansal portrait"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="eager"
+                />
                 {/* subtle grain */}
                 <div
-                  className="absolute inset-0 opacity-40 mix-blend-multiply pointer-events-none"
+                  className="absolute inset-0 opacity-20 mix-blend-multiply pointer-events-none"
                   style={{
                     backgroundImage:
                       'radial-gradient(hsl(var(--line-2)) 1px, transparent 1px)',
@@ -73,7 +71,7 @@ const HeroSection = () => {
                 />
               </div>
               <p className="eyebrow text-dim mt-3 text-center md:text-left">
-                Vaibhav Bansal · Gurugram
+                Vaibhav Bansal · Mumbai
               </p>
             </div>
           </div>

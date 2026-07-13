@@ -45,7 +45,7 @@ const ContactSection = () => {
               href: 'https://linkedin.com/in/vaibhav-bansal-354b77153',
               external: true,
             },
-            { icon: MapPin, label: 'Location', value: 'Gurugram, India' },
+            { icon: MapPin, label: 'Location', value: 'Mumbai, India' },
           ].map((c, i) => {
             const Icon = c.icon;
             const inner = (

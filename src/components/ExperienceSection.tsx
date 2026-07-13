@@ -4,7 +4,7 @@ const experiences = [
   {
     company: 'UnifyApps',
     role: 'Senior Product Manager',
-    location: 'Gurugram',
+    location: 'Mumbai',
     description: 'Led product initiatives focused on AI-driven automation and enterprise product demonstrations.',
     highlights: [
       'Built an automated demo creation system reducing delivery time by 47%',
@@ -21,7 +21,7 @@ const experiences = [
   {
     company: 'Sprinklr',
     role: 'Product Manager → Senior Product Analyst',
-    location: 'Gurugram',
+    location: 'Mumbai',
     description:
       'Worked on digital customer care and experience management platforms used by large global enterprises.',
     highlights: [
