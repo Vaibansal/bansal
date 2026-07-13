@@ -34,3 +34,7 @@ const Index = () => {
       <ContactSection />
     </div>
   );
+};
+
+export default Index;
+
