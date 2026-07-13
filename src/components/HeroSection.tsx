@@ -1,6 +1,5 @@
 import { ArrowDown, Download } from 'lucide-react';
 import portrait from '@/assets/portrait.jpeg.asset.json';
-import resume from '@/assets/resume.pdf.asset.json';
 
 const heroStats = [
   { num: '$21M+', label: 'Value delivered' },
@@ -42,7 +41,7 @@ const HeroSection = () => {
 
             <div className="text-reveal text-reveal-delay-4 flex flex-wrap items-center gap-3">
               <a href="#featured-projects" className="btn-ink">View my work</a>
-              <a href={resume.url} target="_blank" rel="noopener noreferrer" className="btn-outline">
+              <a href="https://drive.google.com/file/d/1J3s8_67mab8h1nlc-7LuPLvd3EaMMMzE/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className="btn-outline">
                 <Download size={13} /> Resume
               </a>
             </div>
