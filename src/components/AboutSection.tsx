@@ -31,7 +31,7 @@ const AboutSection = () => {
           <aside className="animate-on-scroll-right card-paper p-6">
             <p className="eyebrow text-gold mb-3">Currently</p>
             <p className="font-display text-lg text-ink leading-snug">Senior PM @ UnifyApps</p>
-            <p className="text-sm text-dim mt-1">AI-driven product experiences · Gurugram</p>
+            <p className="text-sm text-dim mt-1">AI-driven product experiences · Mumbai</p>
 
             <div className="h-px bg-[hsl(var(--line))] my-5" />
 
