@@ -22,11 +22,11 @@ const Index = () => {
       <AboutSection />
       <FeaturedProjectsSection />
       {/* Editorial pull quote 1 */}
-      <PullQuote quote="I don't ship decks. I ship systems that run without me" attribution="VB" alt />
+      <PullQuote quote="I don't ship decks. I ship systems that run without me" attribution="Bansal" alt />
       <WhatIDoSection />
       <ExperienceSection />
       {/* Editorial pull quote 2 */}
-      <PullQuote quote="Products earn revenue. Operations earn trust. I build both" attribution="VB" />
+      <PullQuote quote="Products earn revenue. Operations earn trust. I build both" attribution="Bansal" />
       <EASection />
       <ProjectsSection />
       <SkillsSection />
