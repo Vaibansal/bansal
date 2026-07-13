@@ -1,442 +1,566 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Content-Ops Intake Agent — Brief Processing Module</title>
-<meta name="description" content="An in-product module that turns messy show briefs into catalogue-ready records: extraction, gap analysis, data-richness scoring, calibrated content rating, marketing copy, and human review.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0B1119;
-    --bg-2:#0F1620;
-    --panel:#111827;
-    --panel-2:#131b26;
-    --line:rgba(147,165,183,0.14);
-    --line-strong:rgba(147,165,183,0.24);
-    --text:#E8EDF3;
-    --muted:#93A5B7;
-    --muted-2:#5F7183;
-    --teal:#3CC3D1;
-    --amber:#F3B24A;
-    --amber-deep:#B9862A;
-    --cream:#F4F5F2;
-    --cream-ink:#12141A;
-    --radius:16px;
-    --maxw:1180px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:"Inter",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    line-height:1.6;
-    overflow-x:hidden;
-  }
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  .mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
-  .display{font-family:"Poppins","Inter",sans-serif;letter-spacing:-.02em;line-height:1.05}
-  .eyebrow{
-    font-family:"JetBrains Mono",monospace;
-    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--muted-2);display:inline-flex;align-items:center;gap:12px;
-  }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--amber);display:inline-block}
-  .teal{color:var(--teal)}
-  .amber{color:var(--amber)}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content-Ops Intake Agent — Brief Processing Module</title>
+    <meta
+      name="description"
+      content="An in-product module that turns messy show briefs into catalogue-ready records: extraction, gap analysis, data-richness scoring, calibrated content rating, marketing copy, and human review."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root{
+        --paper:#F5F4EF;
+        --paper-2:#EFEEE7;
+        --panel:#FFFFFF;
+        --line:#E0DED4;
+        --line-2:#D2D0C4;
+        --ink:#14161B;
+        --dim:#5C6470;
+        --faint:#9AA0A8;
+        --gold:#B9862A;
+        --gold-text:#8F6516;
+        --gold-soft:rgba(185,134,42,.10);
+        --gold-line:rgba(185,134,42,.35);
+        --teal:#0E7468;
+        --teal-soft:rgba(14,116,104,.08);
+        --teal-line:rgba(14,116,104,.30);
+        --ink-gold:#D9A857;           /* gold for use ON ink (final CTA) */
+        --radius:16px;
+        --maxw:1180px;
+        --shadow:0 8px 30px rgba(20,22,27,.06);
+      }
+      *{box-sizing:border-box;margin:0;padding:0}
+      html{scroll-behavior:smooth}
+      @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+      body{
+        background:var(--paper);
+        color:var(--ink);
+        font-family:"Inter",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        -webkit-font-smoothing:antialiased;
+        line-height:1.6;
+        overflow-x:hidden;
+      }
+      a{color:inherit;text-decoration:none}
+      ::selection{background:var(--gold-soft);color:var(--ink)}
+      :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+      .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+      .mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+      .display{font-family:"Space Grotesk","Inter",sans-serif;letter-spacing:-.02em;line-height:1.05}
+      .eyebrow{
+        font-family:"IBM Plex Mono",monospace;
+        font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+        color:var(--dim);display:inline-flex;align-items:center;gap:12px;
+      }
+      .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);display:inline-block}
+      .gold{color:var(--gold-text);font-style:italic}
 
-  /* NAV */
-  header.nav{position:sticky;top:0;z-index:50;background:rgba(11,17,25,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
-  .brand{display:flex;align-items:center;gap:12px}
-  .logo{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#F3B24A,#e39a2b);display:grid;place-items:center;font-weight:800;font-size:13px;color:#1a1206;font-family:"JetBrains Mono",monospace}
-  .brand b{font-size:16px;font-weight:700;letter-spacing:-.01em;display:block;line-height:1.1}
-  .brand span{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;color:var(--muted-2)}
-  nav.links{display:flex;align-items:center;gap:30px}
-  nav.links a{color:var(--muted);font-size:14.5px;font-weight:500;transition:color .2s}
-  nav.links a:hover{color:var(--text)}
-  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;border-radius:10px;padding:10px 18px;cursor:pointer;border:1px solid transparent;transition:transform .15s,background .2s,border-color .2s}
-  .btn:hover{transform:translateY(-1px)}
-  .btn-amber{background:linear-gradient(135deg,#F3B24A,#e6a338);color:#1a1206}
-  .btn-teal{background:linear-gradient(135deg,#3CC3D1,#2ba7b4);color:#04252a}
-  .btn-ghost{background:rgba(255,255,255,.03);border-color:var(--line-strong);color:var(--text)}
-  @media(max-width:820px){nav.links a:not(.btn){display:none}}
+      /* NAV */
+      header.nav{position:sticky;top:0;z-index:50;background:rgba(245,244,239,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+      .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
+      .brand{display:flex;align-items:center;gap:12px}
+      .logo{width:34px;height:34px;border-radius:8px;background:var(--ink);display:grid;place-items:center;font-weight:600;font-size:13px;color:var(--paper);font-family:"IBM Plex Mono",monospace;box-shadow:inset 0 -3px 0 var(--gold)}
+      .brand b{font-size:16px;font-weight:700;letter-spacing:-.01em;display:block;line-height:1.1;font-family:"Space Grotesk",sans-serif}
+      .brand span{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;color:var(--faint)}
+      nav.links{display:flex;align-items:center;gap:30px}
+      nav.links a{color:var(--dim);font-size:14.5px;font-weight:500;transition:color .2s}
+      nav.links a:hover{color:var(--ink)}
+      .btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:13px;font-family:"IBM Plex Mono",monospace;letter-spacing:.04em;text-transform:uppercase;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .15s,background .2s,border-color .2s}
+      .btn:hover{transform:translateY(-1px)}
+      .btn-primary{background:var(--ink);color:var(--paper)}
+      .btn-primary:hover{background:#22252D}
+      .btn-gold{background:var(--gold);color:#1a1206}
+      .btn-gold:hover{background:#C99539}
+      .btn-ghost{background:var(--panel);border-color:var(--line-2);color:var(--ink)}
+      @media(max-width:820px){nav.links a:not(.btn){display:none}}
 
-  section{padding:96px 0}
-  .sec-head{margin-bottom:44px}
-  .sec-head h2{font-size:clamp(26px,3.4vw,38px);font-weight:800}
-  .kicker{display:flex;align-items:center;gap:16px;margin-bottom:14px}
-  .kicker .k1{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
-  .kicker .k2{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
-  .kicker .rule{flex:1;height:1px;background:var(--line)}
+      section{padding:88px 0}
+      .alt{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+      .sec-head{margin-bottom:44px}
+      .sec-head h2{font-size:clamp(26px,3.4vw,38px);font-weight:700;font-family:"Space Grotesk",sans-serif;letter-spacing:-.02em}
+      .kicker{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+      .kicker .k1{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-text)}
+      .kicker .k2{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+      .kicker .rule{flex:1;height:1px;background:var(--line-2)}
 
-  /* HERO */
-  .hero{padding:70px 0 90px;position:relative}
-  .hero::before{content:"";position:absolute;inset:0;background:
-    radial-gradient(600px 300px at 15% 8%,rgba(60,195,209,.08),transparent 60%),
-    radial-gradient(500px 320px at 85% 20%,rgba(243,178,74,.06),transparent 60%);
-    pointer-events:none}
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative}
-  .badge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid rgba(60,195,209,.4);border-radius:999px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.15em;color:var(--teal);text-transform:uppercase}
-  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
-  .hero-eyebrow{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:22px}
-  h1.hero-title{font-family:"Poppins",sans-serif;font-weight:800;font-size:clamp(38px,5.4vw,64px);line-height:1.02;letter-spacing:-.03em;margin-bottom:24px}
-  .hero p.lead{color:var(--muted);font-size:17px;max-width:540px;margin-bottom:32px}
-  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .hero-note{margin-top:18px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted-2);letter-spacing:.03em}
+      /* HERO */
+      .hero{padding:70px 0 90px;position:relative}
+      .hero::before{content:"";position:absolute;inset:0;background:
+        radial-gradient(600px 300px at 15% 8%,rgba(14,116,104,.06),transparent 60%),
+        radial-gradient(500px 320px at 85% 20%,rgba(185,134,42,.07),transparent 60%);
+        pointer-events:none}
+      .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative}
+      .badge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--teal-line);border-radius:999px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.15em;color:var(--teal);text-transform:uppercase;background:var(--panel)}
+      .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+      .hero-eyebrow{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:22px}
+      h1.hero-title{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(38px,5.4vw,62px);line-height:1.03;letter-spacing:-.03em;margin-bottom:24px;text-wrap:balance}
+      .hero p.lead{color:var(--dim);font-size:17px;max-width:540px;margin-bottom:32px}
+      .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+      .hero-note{margin-top:18px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--faint);letter-spacing:.03em}
 
-  /* hero panel (brief -> record) */
-  .panel{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:var(--radius);padding:22px}
-  .panel-label{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--muted-2);text-transform:uppercase;margin-bottom:12px}
-  .brief-box{border:1px dashed var(--line-strong);border-radius:12px;padding:16px 18px;font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--muted);line-height:1.9}
-  .brief-box .fname{color:var(--amber)}
-  .arrow-down{text-align:center;color:var(--amber);font-size:20px;margin:14px 0}
-  .record-box{background:linear-gradient(180deg,#16202c,#131b26);border:1px solid var(--line-strong);border-radius:12px;padding:6px 18px}
-  .rec-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line)}
-  .rec-row:last-child{border-bottom:none}
-  .rec-k{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--muted-2);text-transform:uppercase}
-  .rec-v{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
-  .conf{font-family:"JetBrains Mono",monospace;font-size:10px;padding:2px 7px;border-radius:6px;background:rgba(60,195,209,.12);color:var(--teal)}
-  .rating-chip{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:12px;padding:5px 10px;border-radius:7px;background:rgba(243,178,74,.12);color:var(--amber);border:1px solid rgba(243,178,74,.3);margin:14px 0 4px}
-  .meter{margin-top:6px}
-  .meter-top{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);margin-bottom:7px}
-  .bar{height:7px;border-radius:99px;background:rgba(147,165,183,.15);overflow:hidden}
-  .bar > i{display:block;height:100%;width:78%;background:linear-gradient(90deg,var(--teal),var(--amber));border-radius:99px}
-  .miss{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--amber);margin-top:10px}
-  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+      /* hero panel (brief -> record) */
+      .panel-label{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;margin-bottom:12px}
+      .brief-box{background:var(--panel);border:1px dashed var(--line-2);border-radius:12px;padding:16px 18px;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--dim);line-height:1.9;box-shadow:var(--shadow)}
+      .brief-box .fname{color:var(--gold-text)}
+      .arrow-down{text-align:center;color:var(--gold-text);font-size:20px;margin:14px 0}
+      .record-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 18px;box-shadow:var(--shadow)}
+      .rec-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line)}
+      .rec-row:last-child{border-bottom:none}
+      .rec-k{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase}
+      .rec-v{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--ink)}
+      .rec-v.goldv{color:var(--gold-text)}
+      .conf{font-family:"IBM Plex Mono",monospace;font-size:10px;padding:2px 7px;border-radius:6px;background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)}
+      .rating-chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:12px;padding:5px 10px;border-radius:7px;background:var(--gold-soft);color:var(--gold-text);border:1px solid var(--gold-line);margin:14px 0 4px}
+      .meter{margin-top:6px}
+      .meter-top{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--dim);margin-bottom:7px}
+      .bar{height:7px;border-radius:99px;background:#E5E3D9;overflow:hidden;border:1px solid var(--line)}
+      .bar > i{display:block;height:100%;width:78%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:99px}
+      .miss{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--gold-text);margin-top:10px}
+      @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
 
-  /* WHOLE PRODUCT flow */
-  .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:20px;align-items:center}
-  .flow-col h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--muted-2);text-transform:uppercase;margin-bottom:14px}
-  .flow-arrow{color:var(--amber);font-size:22px;text-align:center}
-  .pipe{background:rgba(60,195,209,.06);border:1px solid rgba(60,195,209,.22);border-radius:12px;padding:18px;text-align:center}
-  .pipe .n{font-family:"JetBrains Mono",monospace;color:var(--teal);font-size:12px;letter-spacing:.14em;margin-bottom:6px}
-  .pipe .t{font-weight:700;font-size:15px}
-  @media(max-width:900px){.flow{grid-template-columns:1fr;gap:12px}.flow-arrow{transform:rotate(90deg)}}
+      /* WHOLE PRODUCT flow */
+      .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:20px;align-items:center}
+      .flow-col h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;margin-bottom:14px}
+      .flow-arrow{color:var(--gold-text);font-size:22px;text-align:center}
+      .pipe{background:var(--panel);border:1px solid var(--teal-line);border-radius:12px;padding:18px;text-align:center;box-shadow:var(--shadow)}
+      .pipe .n{font-family:"IBM Plex Mono",monospace;color:var(--teal);font-size:12px;letter-spacing:.14em;margin-bottom:6px}
+      .pipe .t{font-weight:700;font-size:15px;font-family:"Space Grotesk",sans-serif}
+      @media(max-width:900px){.flow{grid-template-columns:1fr;gap:12px}.flow-arrow{transform:rotate(90deg)}}
 
-  /* WHAT IT DOES grid */
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:border-color .25s,transform .2s}
-  .card:hover{border-color:var(--line-strong);transform:translateY(-3px)}
-  .card .num{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--amber);border:1px solid rgba(243,178,74,.3);border-radius:7px;padding:4px 9px;margin-bottom:18px}
-  .card h3{font-size:18px;font-weight:700;margin-bottom:10px}
-  .card p{color:var(--muted);font-size:14.5px}
-  @media(max-width:900px){.cards{grid-template-columns:1fr}}
+      /* WHAT IT DOES grid */
+      .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+      .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:border-color .25s,transform .2s,box-shadow .2s;box-shadow:var(--shadow)}
+      .card:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:0 14px 40px rgba(20,22,27,.09)}
+      .card .num{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--gold-text);border:1px solid var(--gold-line);background:var(--gold-soft);border-radius:7px;padding:4px 9px;margin-bottom:18px}
+      .card h3{font-size:18px;font-weight:700;margin-bottom:10px;font-family:"Space Grotesk",sans-serif;letter-spacing:-.01em}
+      .card p{color:var(--dim);font-size:14.5px}
+      @media(max-width:900px){.cards{grid-template-columns:1fr}}
 
-  /* WHY DIFFERENT */
-  .why{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-  .why .card{border-left:3px solid var(--amber);padding:22px}
-  .why h3{font-size:16px;margin-bottom:9px}
-  @media(max-width:1000px){.why{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:600px){.why{grid-template-columns:1fr}}
+      /* WHY DIFFERENT */
+      .why{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+      .why .card{border-left:3px solid var(--gold);padding:22px}
+      .why h3{font-size:16px;margin-bottom:9px}
+      @media(max-width:1000px){.why{grid-template-columns:repeat(2,1fr)}}
+      @media(max-width:600px){.why{grid-template-columns:1fr}}
 
-  /* WHAT YOU GET (light) */
-  .light{background:var(--cream);color:var(--cream-ink)}
-  .light .kicker .k1{color:var(--amber-deep)}
-  .light .kicker .k2{color:#7c8794}
-  .light .rule{background:rgba(0,0,0,.1)}
-  .getbox{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:var(--radius);padding:44px;box-shadow:0 10px 40px rgba(0,0,0,.06)}
-  .getbox p{font-size:20px;line-height:1.75;color:#4a5560}
-  .getbox b{color:var(--cream-ink);font-weight:700}
+      /* WHAT YOU GET */
+      .getbox{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:44px;box-shadow:0 10px 40px rgba(20,22,27,.07)}
+      .getbox p{font-size:20px;line-height:1.75;color:var(--dim)}
+      .getbox b{color:var(--ink);font-weight:700}
 
-  /* UNDER THE HOOD */
-  .hood-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
-  .stage-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
-  .stage{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:rgba(60,195,209,.07);border:1px solid rgba(60,195,209,.2);color:var(--text);padding:9px 13px;border-radius:9px}
-  .stage b{color:var(--teal);margin-right:6px}
-  .hood p{color:var(--muted);font-size:15px;margin-bottom:16px}
-  .tri{display:flex;flex-direction:column;gap:14px}
-  .tri div{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:14.5px;color:var(--muted)}
-  .tri div b{color:var(--text)}
-  @media(max-width:900px){.hood-grid{grid-template-columns:1fr;gap:26px}}
+      /* UNDER THE HOOD */
+      .hood-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
+      .stage-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+      .stage{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--panel);border:1px solid var(--teal-line);color:var(--ink);padding:9px 13px;border-radius:9px}
+      .stage b{color:var(--teal);margin-right:6px}
+      .hood p{color:var(--dim);font-size:15px;margin-bottom:16px}
+      .tri{display:flex;flex-direction:column;gap:14px}
+      .tri div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:14.5px;color:var(--dim);box-shadow:var(--shadow)}
+      .tri div b{color:var(--gold-text)}
+      @media(max-width:900px){.hood-grid{grid-template-columns:1fr;gap:26px}}
 
-  /* FAQ (light) */
-  .faq-wrap{max-width:840px;margin:0 auto}
-  .faq-title{text-align:center;font-family:"Poppins",sans-serif;font-weight:700;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em;margin:10px 0 30px}
-  .faq-eyebrow{text-align:center;display:block;margin-bottom:4px}
-  .faq-eyebrow .eyebrow{color:var(--amber-deep)}
-  details{border-top:1px solid rgba(0,0,0,.1);padding:22px 4px}
-  details:last-child{border-bottom:1px solid rgba(0,0,0,.1)}
-  summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:17px;color:var(--cream-ink)}
-  summary::-webkit-details-marker{display:none}
-  summary .pm{color:var(--amber-deep);font-size:20px;font-weight:400;transition:transform .2s}
-  details[open] summary .pm{transform:rotate(45deg)}
-  details p{color:#4a5560;font-size:15px;margin-top:14px;max-width:680px}
+      /* STRIP */
+      .strip{border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);padding:26px 0;background:var(--paper)}
+      .strip-in{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.08em;color:var(--dim)}
+      .strip-in span.sep{color:var(--line-2)}
 
-  /* FINAL CTA */
-  .final{position:relative}
-  .final-box{background:
-      radial-gradient(600px 240px at 50% 0%,rgba(60,195,209,.12),transparent 65%),
-      linear-gradient(180deg,#101a24,#0d151d);
-    border:1px solid rgba(60,195,209,.28);border-radius:22px;padding:60px 30px;text-align:center}
-  .final-box h2{font-family:"Poppins",sans-serif;font-weight:800;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;margin-bottom:14px}
-  .final-box p{color:var(--muted);font-size:17px;margin-bottom:28px}
-  .final-note{margin-top:18px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted-2)}
+      /* FAQ */
+      .faq-wrap{max-width:840px;margin:0 auto}
+      .faq-title{text-align:center;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em;margin:10px 0 30px}
+      .faq-eyebrow{text-align:center;display:block;margin-bottom:4px}
+      .faq-eyebrow .eyebrow{color:var(--gold-text)}
+      details{border-top:1px solid var(--line-2);padding:22px 4px}
+      details:last-child{border-bottom:1px solid var(--line-2)}
+      summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:17px;color:var(--ink)}
+      summary::-webkit-details-marker{display:none}
+      summary .pm{color:var(--gold-text);font-size:20px;font-weight:400;transition:transform .2s}
+      details[open] summary .pm{transform:rotate(45deg)}
+      details p{color:var(--dim);font-size:15px;margin-top:14px;max-width:680px}
 
-  /* FOOTER */
-  footer{border-top:1px solid var(--line);padding:56px 0 40px}
-  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;margin-bottom:40px}
-  .foot-brand p{color:var(--muted);font-size:14px;max-width:280px;margin-top:14px}
-  .foot-col h5{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--muted-2);text-transform:uppercase;margin-bottom:16px}
-  .foot-col a,.foot-col span{display:block;color:var(--muted);font-size:14.5px;margin-bottom:11px;transition:color .2s}
-  .foot-col a:hover{color:var(--text)}
-  .foot-bar{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:22px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted-2)}
-  .foot-bar .r a{margin-left:20px;color:var(--muted-2)}
-  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0}
-  .strip-in{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.08em;color:var(--muted-2)}
-  .strip-in span.sep{color:var(--line-strong)}
-  @media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:26px}.foot-bar{flex-direction:column;gap:12px}}
-</style>
-</head>
-<body>
+      /* FINAL CTA — the ink moment */
+      .final{position:relative}
+      .final-box{background:
+          radial-gradient(600px 240px at 50% 0%,rgba(217,168,87,.14),transparent 65%),
+          #14161B;
+        border:1px solid #2A2D35;border-radius:22px;padding:60px 30px;text-align:center;color:var(--paper)}
+      .final-box h2{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;margin-bottom:14px}
+      .final-box h2 .gold{color:var(--ink-gold)}
+      .final-box p{color:#A9AFB9;font-size:17px;margin-bottom:28px}
+      .final-note{margin-top:18px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:#7A8089}
 
-<!-- NAV -->
-<header class="nav">
-  <div class="wrap nav-in">
-    <a class="brand" href="#top">
-      <span class="logo">IA</span>
-      <span><b>Intake Agent</b><span>CONTENT OPS</span></span>
-    </a>
-    <nav class="links">
-      <a href="#does">Capabilities</a>
-      <a href="#hood">How it works</a>
-      <a href="#faq">FAQ</a>
-      <a class="btn btn-amber" href="#final">Open in App →</a>
-    </nav>
-  </div>
-</header>
-
-<!-- HERO -->
-<a id="top"></a>
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="hero-eyebrow">
-        <span class="eyebrow">For Broadcast · Streaming · Content Ops</span>
-        <span class="badge"><span class="dot"></span>Live Module</span>
-      </div>
-      <h1 class="hero-title">From messy brief to <span class="amber">catalogue-ready</span>.<br>Automatically.</h1>
-      <p class="lead">Every week your team receives dozens of show briefs — some clean, some missing half the details, some buried in forwarded-email noise. Today a person reads each one, fills a metadata sheet, writes a marketing line, and assigns a rating. It's slow, inconsistent, and doesn't scale. This module does that entire job inside your workspace — and knows when to ask a human.</p>
-      <div class="hero-cta">
-        <a class="btn btn-amber" href="#final">Process a Brief →</a>
-        <a class="btn btn-ghost" href="#does">See What It Does</a>
-      </div>
-      <div class="hero-note">Runs inside your content-ops workspace · No data leaves your pipeline unattended.</div>
-    </div>
-
-    <div>
-      <div class="panel-label">Brief In</div>
-      <div class="brief-box">
-        <span class="fname">FWD: FINAL2.docx</span><br>
-        … cast tba …<br>
-        runtime 42?? · drama-ish
-      </div>
-      <div class="arrow-down">↓</div>
-      <div class="panel-label">Record Out</div>
-      <div class="record-box">
-        <div class="rec-row"><span class="rec-k">Title</span><span class="rec-v">Ghar Ki Baat <span class="conf">98%</span></span></div>
-        <div class="rec-row"><span class="rec-k">Genre</span><span class="rec-v">Family drama <span class="conf">95%</span></span></div>
-        <div class="rec-row"><span class="rec-k">Runtime</span><span class="rec-v">42 min <span class="conf">88%</span></span></div>
-      </div>
-      <div class="rating-chip">U/A 13+ · rationale attached</div>
-      <div class="meter">
-        <div class="meter-top"><span>Data-richness</span><span>78 / 100</span></div>
-        <div class="bar"><i></i></div>
-        <div class="miss">3 missing fields → request sheet ready</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHOLE PRODUCT -->
-<section id="flow">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker"><span class="k1">The Whole Product</span><span class="k2">One messy brief → one clean record</span><span class="rule"></span></div>
-    </div>
-    <div class="flow">
-      <div class="flow-col">
-        <h4>What Arrives</h4>
-        <div class="brief-box" style="border-radius:12px">
-          FWD: FWD: show brief final FINAL2.docx<br>
-          … cast tba …<br>
-          … runtime approx 42 min?? …<br>
-          genre: family drama-ish<br>
-          … "can you fill the rest?"
-        </div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-col">
-        <h4>8-Stage Pipeline</h4>
-        <div class="pipe"><div class="n">01 → 08</div><div class="t">OCR · Extract · Retrieve · Gap-check · Score · Rate · Market · Review</div></div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-col">
-        <h4>What Comes Out</h4>
-        <div class="record-box">
-          <div class="rec-row"><span class="rec-k">Title</span><span class="rec-v">Ghar Ki Baat <span class="conf">98%</span></span></div>
-          <div class="rec-row"><span class="rec-k">Runtime</span><span class="rec-v">42 min <span class="conf">88%</span></span></div>
-          <div class="rec-row"><span class="rec-k">Rating</span><span class="rec-v amber">U/A 13+</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT IT DOES -->
-<section id="does">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker"><span class="k1">What It Does</span><span class="k2">Six jobs, one pass</span><span class="rule"></span></div>
-    </div>
-    <div class="cards">
-      <div class="card"><span class="num">01</span><h3>Reads and understands it</h3><p>Drop in a brief — pasted text, a document, even a scanned PDF or image. Every relevant field is extracted into your master metadata schema, with a confidence level and the exact source snippet behind each value. It never invents cast, dates, or figures — if something isn't there, it says so.</p></div>
-      <div class="card"><span class="num">02</span><h3>Knows what's missing</h3><p>Objectively checks the brief against your required-vs-nice-to-have field list and produces a ready-to-send request sheet you can email straight back to the production house.</p></div>
-      <div class="card"><span class="num">03</span><h3>Scores the data</h3><p>Every submission gets a 0–100 data-richness score — at a glance you see what's catalogue-ready and what needs work.</p></div>
-      <div class="card"><span class="num">04</span><h3>Assigns a content rating</h3><p>An age certification (U / U-A 7+ / 13+ / 16+ / A) with advisory flags and a written rationale — calibrated against your own past rating decisions, so it matches your network's bar, not a generic one.</p></div>
-      <div class="card"><span class="num">05</span><h3>Writes the marketing</h3><p>An on-air hook, three tagline options, comparable titles, a recommended slot, and SEO keywords — for every brief.</p></div>
-      <div class="card"><span class="num">06</span><h3>Routes it to a human</h3><p>Everything lands in a review screen where a person approves, edits, or sends it back. Nothing auto-publishes when the stakes are high.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY DIFFERENT -->
-<section id="why">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker"><span class="k1">Why It's Different</span><span class="k2">Self-healing, not just automated</span><span class="rule"></span></div>
-    </div>
-    <div class="why">
-      <div class="card"><h3>Self-healing, not just automated</h3><p>When fields are missing or a rating is uncertain, it doesn't guess; it flags gaps, drafts the follow-up, and escalates risky calls.</p></div>
-      <div class="card"><h3>It learns from your decisions</h3><p>A knowledge base of past briefs anchors every new rating to your own precedent.</p></div>
-      <div class="card"><h3>Objective where it counts</h3><p>Gap checks, scoring, and escalation are computed by rules, consistent and auditable.</p></div>
-      <div class="card"><h3>Nothing fabricated</h3><p>Every field carries its confidence and its evidence. Absent stays absent.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT YOU GET (light) -->
-<section class="light" id="get">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker"><span class="k1">What You Get</span><span class="k2">One structured record per brief</span><span class="rule"></span></div>
-    </div>
-    <div class="getbox">
-      <p>For every brief: a single, structured record ready for your catalogue — <b>clean metadata</b>, a <b>content rating with rationale</b>, a <b>marketing package</b>, a <b>data-richness score</b>, a <b>production-house follow-up sheet</b>, and a <b>full audit trail</b> of what the agent did and what the human changed.</p>
-    </div>
-  </div>
-</section>
-
-<!-- UNDER THE HOOD -->
-<section id="hood" class="hood">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="kicker"><span class="k1">Under the Hood</span><span class="k2">For technical integrators</span><span class="rule"></span></div>
-    </div>
-    <div class="hood-grid">
-      <div>
-        <div class="stage-list">
-          <span class="stage"><b>01</b>OCR &amp; ingestion</span>
-          <span class="stage"><b>02</b>Field extraction</span>
-          <span class="stage"><b>03</b>KB retrieval</span>
-          <span class="stage"><b>04</b>Gap analysis</span>
-          <span class="stage"><b>05</b>Data-richness scoring</span>
-          <span class="stage"><b>06</b>Calibrated rating</span>
-          <span class="stage"><b>07</b>Marketing generation</span>
-          <span class="stage"><b>08</b>Human review</span>
-        </div>
-        <p>Built on frontier AI for extraction, rating, and copy; a semantic knowledge base of prior briefs; and a rules engine for the objective logic. Exposes a clean record object your application can consume directly.</p>
-      </div>
-      <div class="tri">
-        <div><b>Deterministic</b> where correctness matters — gap checks, scoring, and escalation.</div>
-        <div><b>Generative</b> where judgment helps — extraction, rating rationale, marketing copy.</div>
-        <div><b>Human-gated</b> where risk is real — nothing high-stakes publishes on its own.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STRIP -->
-<div class="strip">
-  <div class="wrap strip-in">
-    <span>Deterministic core</span><span class="sep">·</span>
-    <span>Generative where judgment helps</span><span class="sep">·</span>
-    <span>Human-gated by design</span>
-  </div>
-</div>
-
-<!-- FAQ (light) -->
-<section class="light" id="faq">
-  <div class="wrap faq-wrap">
-    <div class="faq-eyebrow"><span class="eyebrow">FAQ</span></div>
-    <h2 class="faq-title">What content-ops leads ask first.</h2>
-    <details open>
-      <summary>Will it invent metadata when the brief is vague?<span class="pm">+</span></summary>
-      <p>No — this is the core design principle. Every field carries confidence and source evidence. If it isn't in the brief, the field stays empty and lands on the follow-up sheet.</p>
-    </details>
-    <details>
-      <summary>Can we trust the age ratings?<span class="pm">+</span></summary>
-      <p>Ratings are calibrated against your own past rating decisions, not a generic standard. Each rating carries advisory flags and a written rationale, and any uncertain call is escalated to a human reviewer before it's finalized.</p>
-    </details>
-    <details>
-      <summary>What formats can it read?<span class="pm">+</span></summary>
-      <p>Pasted text, documents, spreadsheets, scanned PDFs, and images. OCR runs at ingestion, so even a photographed or forwarded brief is normalized into the same structured record.</p>
-    </details>
-    <details>
-      <summary>Does it replace our content-ops team?<span class="pm">+</span></summary>
-      <p>No — it removes the mechanical first pass. Your team stops re-typing metadata and instead reviews, approves, or corrects a ready-made record. Every human change is captured in the audit trail and feeds back into the calibration.</p>
-    </details>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final" id="final">
-  <div class="wrap">
-    <div class="final-box">
-      <h2>Intake without the <span class="amber">bottleneck</span>.</h2>
-      <p>Drop a brief into the console and watch the record build, field by field.</p>
-      <a class="btn btn-teal" href="#top">Open the Intake Console →</a>
-      <div class="final-note">Part of your content-ops workspace.</div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-brand">
+      /* FOOTER */
+      footer{border-top:1px solid var(--line-2);padding:56px 0 40px;background:var(--paper-2)}
+      .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;margin-bottom:40px}
+      .foot-brand p{color:var(--dim);font-size:14px;max-width:280px;margin-top:14px}
+      .foot-col h5{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;margin-bottom:16px}
+      .foot-col a,.foot-col span{display:block;color:var(--dim);font-size:14.5px;margin-bottom:11px;transition:color .2s}
+      .foot-col a:hover{color:var(--ink)}
+      .foot-bar{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line-2);padding-top:22px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--faint)}
+      .foot-bar .r a{margin-left:20px;color:var(--faint)}
+      .foot-bar .r a:hover{color:var(--ink)}
+      @media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:26px}.foot-bar{flex-direction:column;gap:12px}}
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <header class="nav">
+      <div class="wrap nav-in">
         <a class="brand" href="#top">
           <span class="logo">IA</span>
-          <span><b>Intake Agent</b></span>
+          <span><b>Intake Agent</b><span>CONTENT OPS</span></span>
         </a>
-        <p>Turns messy show briefs into catalogue-ready records.</p>
+        <nav class="links">
+          <a href="#does">Capabilities</a>
+          <a href="#hood">How it works</a>
+          <a href="#faq">FAQ</a>
+          <a class="btn btn-primary" href="#final">Open in App →</a>
+        </nav>
       </div>
-      <div class="foot-col">
-        <h5>Explore</h5>
-        <a href="#does">Capabilities</a>
-        <a href="#hood">How it works</a>
-        <a href="#get">What you get</a>
-        <a href="#faq">FAQ</a>
-      </div>
-      <div class="foot-col">
-        <h5>Contact</h5>
-        <a href="mailto:hello@example.com">hello@example.com</a>
-        <span>Your address here</span>
-        <a href="#">Contact us →</a>
-      </div>
-    </div>
-    <div class="foot-bar">
-      <span>© 2026 Intake Agent</span>
-      <span class="r"><a href="#">Privacy</a><a href="#">Terms</a></span>
-    </div>
-  </div>
-</footer>
+    </header>
 
-</body>
+    <!-- HERO -->
+    <a id="top"></a>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="hero-eyebrow">
+            <span class="eyebrow">For Broadcast · Streaming · Content Ops</span>
+            <span class="badge"><span class="dot"></span>Live Module</span>
+          </div>
+          <h1 class="hero-title">From messy brief to <span class="gold">catalogue-ready</span>. Automatically.</h1>
+          <p class="lead">
+            Every week your team receives dozens of show briefs — some clean, some missing half the details, some buried
+            in forwarded-email noise. Today a person reads each one, fills a metadata sheet, writes a marketing line,
+            and assigns a rating. It's slow, inconsistent, and doesn't scale. This module does that entire job inside
+            your workspace — and knows when to ask a human.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#final">Process a Brief →</a>
+            <a class="btn btn-ghost" href="#does">See What It Does</a>
+          </div>
+          <div class="hero-note">Runs inside your content-ops workspace · No data leaves your pipeline unattended.</div>
+        </div>
+
+        <div>
+          <div class="panel-label">Brief In</div>
+          <div class="brief-box">
+            <span class="fname">FWD: FINAL2.docx</span><br />
+            … cast tba …<br />
+            runtime 42?? · drama-ish
+          </div>
+          <div class="arrow-down">↓</div>
+          <div class="panel-label">Record Out</div>
+          <div class="record-box">
+            <div class="rec-row">
+              <span class="rec-k">Title</span><span class="rec-v">Ghar Ki Baat <span class="conf">98%</span></span>
+            </div>
+            <div class="rec-row">
+              <span class="rec-k">Genre</span><span class="rec-v">Family drama <span class="conf">95%</span></span>
+            </div>
+            <div class="rec-row">
+              <span class="rec-k">Runtime</span><span class="rec-v">42 min <span class="conf">88%</span></span>
+            </div>
+          </div>
+          <div class="rating-chip">U/A 13+ · rationale attached</div>
+          <div class="meter">
+            <div class="meter-top"><span>Data-richness</span><span>78 / 100</span></div>
+            <div class="bar"><i></i></div>
+            <div class="miss">3 missing fields → request sheet ready</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHOLE PRODUCT -->
+    <section id="flow" class="alt">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="kicker">
+            <span class="k1">The Whole Product</span><span class="k2">One messy brief → one clean record</span
+            ><span class="rule"></span>
+          </div>
+        </div>
+        <div class="flow">
+          <div class="flow-col">
+            <h4>What Arrives</h4>
+            <div class="brief-box" style="border-radius:12px">
+              FWD: FWD: show brief final FINAL2.docx<br />
+              … cast tba …<br />
+              … runtime approx 42 min?? …<br />
+              genre: family drama-ish<br />
+              … "can you fill the rest?"
+            </div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-col">
+            <h4>8-Stage Pipeline</h4>
+            <div class="pipe">
+              <div class="n">01 → 08</div>
+              <div class="t">OCR · Extract · Retrieve · Gap-check · Score · Rate · Market · Review</div>
+            </div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-col">
+            <h4>What Comes Out</h4>
+            <div class="record-box">
+              <div class="rec-row">
+                <span class="rec-k">Title</span><span class="rec-v">Ghar Ki Baat <span class="conf">98%</span></span>
+              </div>
+              <div class="rec-row">
+                <span class="rec-k">Runtime</span><span class="rec-v">42 min <span class="conf">88%</span></span>
+              </div>
+              <div class="rec-row"><span class="rec-k">Rating</span><span class="rec-v goldv">U/A 13+</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT IT DOES -->
+    <section id="does">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="kicker">
+            <span class="k1">What It Does</span><span class="k2">Six jobs, one pass</span><span class="rule"></span>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card">
+            <span class="num">01</span>
+            <h3>Reads and understands it</h3>
+            <p>
+              Drop in a brief — pasted text, a document, even a scanned PDF or image. Every relevant field is extracted
+              into your master metadata schema, with a confidence level and the exact source snippet behind each value.
+              It never invents cast, dates, or figures — if something isn't there, it says so.
+            </p>
+          </div>
+          <div class="card">
+            <span class="num">02</span>
+            <h3>Knows what's missing</h3>
+            <p>
+              Objectively checks the brief against your required-vs-nice-to-have field list and produces a ready-to-send
+              request sheet you can email straight back to the production house.
+            </p>
+          </div>
+          <div class="card">
+            <span class="num">03</span>
+            <h3>Scores the data</h3>
+            <p>
+              Every submission gets a 0–100 data-richness score — at a glance you see what's catalogue-ready and what
+              needs work.
+            </p>
+          </div>
+          <div class="card">
+            <span class="num">04</span>
+            <h3>Assigns a content rating</h3>
+            <p>
+              An age certification (U / U-A 7+ / 13+ / 16+ / A) with advisory flags and a written rationale — calibrated
+              against your own past rating decisions, so it matches your network's bar, not a generic one.
+            </p>
+          </div>
+          <div class="card">
+            <span class="num">05</span>
+            <h3>Writes the marketing</h3>
+            <p>
+              An on-air hook, three tagline options, comparable titles, a recommended slot, and SEO keywords — for every
+              brief.
+            </p>
+          </div>
+          <div class="card">
+            <span class="num">06</span>
+            <h3>Routes it to a human</h3>
+            <p>
+              Everything lands in a review screen where a person approves, edits, or sends it back. Nothing
+              auto-publishes when the stakes are high.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY DIFFERENT -->
+    <section id="why" class="alt">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="kicker">
+            <span class="k1">Why It's Different</span><span class="k2">Self-healing, not just automated</span
+            ><span class="rule"></span>
+          </div>
+        </div>
+        <div class="why">
+          <div class="card">
+            <h3>Self-healing, not just automated</h3>
+            <p>
+              When fields are missing or a rating is uncertain, it doesn't guess; it flags gaps, drafts the follow-up,
+              and escalates risky calls.
+            </p>
+          </div>
+          <div class="card">
+            <h3>It learns from your decisions</h3>
+            <p>A knowledge base of past briefs anchors every new rating to your own precedent.</p>
+          </div>
+          <div class="card">
+            <h3>Objective where it counts</h3>
+            <p>Gap checks, scoring, and escalation are computed by rules, consistent and auditable.</p>
+          </div>
+          <div class="card">
+            <h3>Nothing fabricated</h3>
+            <p>Every field carries its confidence and its evidence. Absent stays absent.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT YOU GET -->
+    <section id="get">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="kicker">
+            <span class="k1">What You Get</span><span class="k2">One structured record per brief</span
+            ><span class="rule"></span>
+          </div>
+        </div>
+        <div class="getbox">
+          <p>
+            For every brief: a single, structured record ready for your catalogue — <b>clean metadata</b>, a
+            <b>content rating with rationale</b>, a <b>marketing package</b>, a <b>data-richness score</b>, a
+            <b>production-house follow-up sheet</b>, and a <b>full audit trail</b> of what the agent did and what the
+            human changed.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- UNDER THE HOOD -->
+    <section id="hood" class="hood alt">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="kicker">
+            <span class="k1">Under the Hood</span><span class="k2">For technical integrators</span
+            ><span class="rule"></span>
+          </div>
+        </div>
+        <div class="hood-grid">
+          <div>
+            <div class="stage-list">
+              <span class="stage"><b>01</b>OCR &amp; ingestion</span>
+              <span class="stage"><b>02</b>Field extraction</span>
+              <span class="stage"><b>03</b>KB retrieval</span>
+              <span class="stage"><b>04</b>Gap analysis</span>
+              <span class="stage"><b>05</b>Data-richness scoring</span>
+              <span class="stage"><b>06</b>Calibrated rating</span>
+              <span class="stage"><b>07</b>Marketing generation</span>
+              <span class="stage"><b>08</b>Human review</span>
+            </div>
+            <p>
+              Built on frontier AI for extraction, rating, and copy; a semantic knowledge base of prior briefs; and a
+              rules engine for the objective logic. Exposes a clean record object your application can consume directly.
+            </p>
+          </div>
+          <div class="tri">
+            <div><b>Deterministic</b> where correctness matters — gap checks, scoring, and escalation.</div>
+            <div><b>Generative</b> where judgment helps — extraction, rating rationale, marketing copy.</div>
+            <div><b>Human-gated</b> where risk is real — nothing high-stakes publishes on its own.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STRIP -->
+    <div class="strip">
+      <div class="wrap strip-in">
+        <span>Deterministic core</span><span class="sep">·</span> <span>Generative where judgment helps</span
+        ><span class="sep">·</span>
+        <span>Human-gated by design</span>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="wrap faq-wrap">
+        <div class="faq-eyebrow"><span class="eyebrow">FAQ</span></div>
+        <h2 class="faq-title">What content-ops leads ask first.</h2>
+        <details open>
+          <summary>Will it invent metadata when the brief is vague?<span class="pm">+</span></summary>
+          <p>
+            No — this is the core design principle. Every field carries confidence and source evidence. If it isn't in
+            the brief, the field stays empty and lands on the follow-up sheet.
+          </p>
+        </details>
+        <details>
+          <summary>Can we trust the age ratings?<span class="pm">+</span></summary>
+          <p>
+            Ratings are calibrated against your own past rating decisions, not a generic standard. Each rating carries
+            advisory flags and a written rationale, and any uncertain call is escalated to a human reviewer before it's
+            finalized.
+          </p>
+        </details>
+        <details>
+          <summary>What formats can it read?<span class="pm">+</span></summary>
+          <p>
+            Pasted text, documents, spreadsheets, scanned PDFs, and images. OCR runs at ingestion, so even a
+            photographed or forwarded brief is normalized into the same structured record.
+          </p>
+        </details>
+        <details>
+          <summary>Does it replace our content-ops team?<span class="pm">+</span></summary>
+          <p>
+            No — it removes the mechanical first pass. Your team stops re-typing metadata and instead reviews, approves,
+            or corrects a ready-made record. Every human change is captured in the audit trail and feeds back into the
+            calibration.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- FINAL CTA — the ink moment -->
+    <section class="final" id="final">
+      <div class="wrap">
+        <div class="final-box">
+          <h2>Intake without the <span class="gold">bottleneck</span>.</h2>
+          <p>Drop a brief into the console and watch the record build, field by field.</p>
+          <a class="btn btn-gold" href="#top">Open the Intake Console →</a>
+          <div class="final-note">Part of your content-ops workspace.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrap">
+        <div class="foot-grid">
+          <div class="foot-brand">
+            <a class="brand" href="#top">
+              <span class="logo">IA</span>
+              <span><b>Intake Agent</b></span>
+            </a>
+            <p>Turns messy show briefs into catalogue-ready records.</p>
+          </div>
+          <div class="foot-col">
+            <h5>Explore</h5>
+            <a href="#does">Capabilities</a>
+            <a href="#hood">How it works</a>
+            <a href="#get">What you get</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div class="foot-col">
+            <h5>Contact</h5>
+            <a href="mailto:hello@example.com">hello@example.com</a>
+            <span>Your address here</span>
+            <a href="#">Contact us →</a>
+          </div>
+        </div>
+        <div class="foot-bar">
+          <span>© 2026 Intake Agent</span>
+          <span class="r"><a href="#">Privacy</a><a href="#">Terms</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
