@@ -1,55 +1,44 @@
-import { Award, Trophy, Star, Target } from 'lucide-react';
+import SectionHeader from './SectionHeader';
 
 const achievements = [
   {
-    icon: Trophy,
-    title: 'Semi-Finalist — iPreneur',
+    big: 'AIR 4444',
+    title: 'IIT-JEE Advanced',
+    description: 'Top 0.5% of 1.2M+ candidates in one of the world\'s toughest exams.',
+  },
+  {
+    big: 'Top 0.5%',
+    title: 'JEE Percentile',
+    description: 'Ranked among the elite in a nationwide engineering entrance.',
+  },
+  {
+    big: 'Semi-Finalist',
+    title: 'iPreneur Summit',
     description: 'Semi-Finalist at iPreneur Social Entrepreneurship Summit.',
   },
   {
-    icon: Award,
-    title: 'IIT-JEE Advanced AIR 4444',
-    description: 'Ranked among the top 0.5% of 1.2M+ candidates in one of the world\'s toughest exams.',
-  },
-  {
-    icon: Star,
-    title: 'First Runner-Up — Rural Internet',
-    description: 'First Runner-Up at Rural Internet Sustainability event, IIT Roorkee.',
-  },
-  {
-    icon: Target,
-    title: 'Second Runner-Up — Cognizance',
-    description: 'Second Runner-Up at Supply Chain Event Cognizance.',
+    big: 'Runner-Up',
+    title: 'Cognizance / Rural Internet',
+    description: 'First Runner-Up (Rural Internet, IIT Roorkee) · Second Runner-Up (Cognizance Supply Chain).',
   },
 ];
 
 const AchievementsSection = () => {
   return (
-    <section id="achievements" className="py-24 px-6 bg-secondary/30">
-      <div className="max-w-5xl mx-auto">
-        <div className="animate-on-scroll mb-16 text-center">
-          <p className="text-sm tracking-[0.2em] uppercase text-primary font-medium mb-3">Recognition</p>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground">Achievements</h2>
-        </div>
+    <section id="achievements" className="py-16 md:py-20 px-6 bg-paper-2">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader index="09" label="Recognition" />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {achievements.map((a, index) => {
-            const Icon = a.icon;
-            return (
-              <div
-                key={a.title}
-                className={`animate-on-scroll-scale stagger-${index + 1} group`}
-              >
-                <div className="bg-card border border-border rounded-2xl p-6 text-center h-full hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2">
-                  <div className="w-14 h-14 bg-accent rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                    <Icon size={24} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
-                  </div>
-                  <h3 className="font-serif text-base font-semibold text-foreground mb-2 leading-tight">{a.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{a.description}</p>
-                </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {achievements.map((a, index) => (
+            <div key={a.title} className={`animate-on-scroll-scale stagger-${index + 1} card-paper p-6`}>
+              <div className="font-mono-plex text-2xl md:text-3xl font-semibold text-gold tracking-tight mb-4">
+                {a.big}
               </div>
-            );
-          })}
+              <p className="eyebrow text-ink mb-2">{a.title}</p>
+              <p className="text-sm text-dim leading-relaxed">{a.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

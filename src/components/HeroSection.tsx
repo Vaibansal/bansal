@@ -1,54 +1,97 @@
-import { ArrowDown, Download } from "lucide-react";
+import { ArrowDown, Download, Upload } from 'lucide-react';
+
+const heroStats = [
+  { num: '$21M+', label: 'Value delivered' },
+  { num: '5+ yrs', label: 'Product & ops' },
+  { num: '47%', label: 'Efficiency gains' },
+  { num: '600K+', label: 'Live users' },
+];
 
 const HeroSection = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Subtle background decoration */}
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-10">
+      {/* soft accents */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/30 rounded-full blur-3xl" />
+        <div className="absolute top-24 right-8 w-72 h-72 rounded-full blur-3xl" style={{ background: 'hsl(var(--gold) / 0.06)' }} />
+        <div className="absolute bottom-24 left-8 w-96 h-96 rounded-full blur-3xl" style={{ background: 'hsl(var(--teal) / 0.05)' }} />
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <p className="text-reveal text-sm tracking-[0.3em] uppercase text-muted-foreground font-medium mb-6">
-          Product Manager · Strategy &amp; Operations · Founder · Executive Operator
-        </p>
+      <div className="relative z-10 max-w-6xl mx-auto w-full px-6">
+        <div className="grid md:grid-cols-[1.4fr_1fr] gap-10 md:gap-14 items-center">
+          {/* Left: name & CTAs */}
+          <div>
+            <p className="text-reveal eyebrow text-dim mb-6">
+              Product Manager · Strategy &amp; Ops · Founder · Executive Operator
+            </p>
 
-        <h1 className="text-reveal text-reveal-delay-1 text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-foreground leading-[1.1] mb-6">
-          Vaibhav
-          <br />
-          <span className="text-primary">Bansal</span>
-        </h1>
+            <h1 className="text-reveal text-reveal-delay-1 font-display text-6xl sm:text-7xl lg:text-8xl font-bold text-ink leading-[0.95] mb-6">
+              Vaibhav
+              <br />
+              <span className="italic text-gold-lg">Bansal.</span>
+            </h1>
 
-        <p className="text-reveal text-reveal-delay-2 text-lg sm:text-xl text-muted-foreground font-light max-w-2xl mx-auto mb-4">
-          I build products, scale operations, and help founders execute faster.
-        </p>
+            <p className="text-reveal text-reveal-delay-2 text-lg sm:text-xl text-ink font-light max-w-xl mb-3">
+              I build products, scale operations, and help founders execute faster.
+            </p>
+            <p className="text-reveal text-reveal-delay-3 text-sm text-dim max-w-lg mb-8 leading-relaxed">
+              From building $21M+ ARR products to leading AI-driven automation initiatives, my work sits at the
+              intersection of product, growth, and execution.
+            </p>
 
-        <p className="text-reveal text-reveal-delay-3 text-sm text-muted-foreground/70 max-w-lg mx-auto mb-10">
-          From building $21M+ ARR products to leading AI-driven automation initiatives, my work sits at the intersection
-          of product, growth, and execution.
-        </p>
+            <div className="text-reveal text-reveal-delay-4 flex flex-wrap items-center gap-3">
+              <a href="#featured-projects" className="btn-ink">View my work</a>
+              <a href="#contact" className="btn-outline">
+                <Download size={13} /> Resume
+              </a>
+            </div>
+          </div>
 
-        <div className="text-reveal text-reveal-delay-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="#experience"
-            className="px-8 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5"
-          >
-            View My Work
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-3 border border-border text-foreground rounded-full text-sm font-medium hover:bg-secondary transition-all hover:-translate-y-0.5 inline-flex items-center gap-2"
-          >
-            <Download size={16} />
-            Download Resume
-          </a>
+          {/* Right: portrait slot */}
+          <div className="text-reveal text-reveal-delay-2 md:justify-self-end">
+            <div className="relative">
+              <div
+                className="w-full max-w-[320px] aspect-[4/5] rounded-2xl border border-gold overflow-hidden relative"
+                style={{ background: 'hsl(var(--paper-2))' }}
+              >
+                {/* placeholder illustration */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="font-display text-8xl font-bold text-ink/15 leading-none">VB</div>
+                    <div className="eyebrow text-faint mt-4 flex items-center justify-center gap-1.5">
+                      <Upload size={11} /> Portrait pending
+                    </div>
+                  </div>
+                </div>
+                {/* subtle grain */}
+                <div
+                  className="absolute inset-0 opacity-40 mix-blend-multiply pointer-events-none"
+                  style={{
+                    backgroundImage:
+                      'radial-gradient(hsl(var(--line-2)) 1px, transparent 1px)',
+                    backgroundSize: '14px 14px',
+                  }}
+                />
+              </div>
+              <p className="eyebrow text-dim mt-3 text-center md:text-left">
+                Vaibhav Bansal · Gurugram
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Stat bar */}
+        <div className="text-reveal text-reveal-delay-4 mt-14 border-t border-line pt-6 grid grid-cols-2 sm:grid-cols-4 gap-6">
+          {heroStats.map((s) => (
+            <div key={s.label} className="flex flex-col">
+              <span className="font-mono-plex text-xl sm:text-2xl text-gold font-semibold tracking-tight">{s.num}</span>
+              <span className="eyebrow text-dim mt-1">{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <a href="#about" className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground/50 animate-bounce">
-        <ArrowDown size={20} />
+      <a href="#about" className="absolute bottom-6 left-1/2 -translate-x-1/2 text-faint animate-bounce" aria-label="Scroll down">
+        <ArrowDown size={18} />
       </a>
     </section>
   );
