@@ -1,4 +1,5 @@
-import { ArrowDown, Download, Upload } from 'lucide-react';
+import { ArrowDown, Download } from 'lucide-react';
+import portrait from '@/assets/portrait.jpeg.asset.json';
 
 const heroStats = [
   { num: '$21M+', label: 'Value delivered' },
