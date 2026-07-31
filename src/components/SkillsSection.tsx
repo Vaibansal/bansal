@@ -11,7 +11,7 @@ const columns = [
   },
   {
     title: 'Business',
-    skills: ['Stakeholder Management', 'Growth Strategy', 'Operations Management', 'Sales Enablement'],
+    skills: ['Stakeholder Management', 'Growth Strategy', 'Operations Management', 'Sales Enablement', 'Whitespace Identification', 'Technical Champion Building'],
   },
   {
     title: 'AI & Automation',

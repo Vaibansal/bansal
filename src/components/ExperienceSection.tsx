@@ -3,7 +3,7 @@ import SectionHeader from './SectionHeader';
 const experiences = [
   {
     company: 'UnifyApps',
-    role: 'Senior Product Manager',
+    role: 'Associate Director of Product Management',
     location: 'Mumbai',
     description: 'Led product initiatives focused on AI-driven automation and enterprise product demonstrations.',
     highlights: [
@@ -11,11 +11,13 @@ const experiences = [
       'Helped generate $450K in new ARR through enterprise product demonstrations',
       'Worked with integrations across 400+ connectors and 60+ UI components',
       'Collaborated closely with sales to accelerate enterprise deal cycles',
+      'Led a cross-functional team of 11 across product, design, and engineering',
     ],
     metrics: [
       { num: '$450K', label: 'New ARR' },
       { num: '−47%', label: 'Delivery time' },
       { num: '400+', label: 'Connectors' },
+      { num: '11', label: 'Team led' },
     ],
   },
   {
@@ -29,11 +31,13 @@ const experiences = [
       'Improved user productivity by 20%',
       'Reduced support tickets by 25% through product improvements',
       'Built standardized user personas to improve adoption across 15K+ users',
+      'Managed a team of 2 analysts to drive product operations and delivery',
     ],
     metrics: [
       { num: '$17M', label: 'ARR' },
       { num: '−25%', label: 'Tickets' },
       { num: '15K+', label: 'Users' },
+      { num: '2', label: 'Team led' },
     ],
   },
   {
