@@ -22,7 +22,7 @@ const HeroSection = () => {
           {/* Left: name & CTAs */}
           <div>
             <p className="text-reveal eyebrow text-dim mb-6">
-              Product Manager · Strategy &amp; Ops · Founder · Executive Operator
+              Associate Director of Product · Strategy &amp; Ops · Founder · Executive Operator
             </p>
 
             <h1 className="text-reveal text-reveal-delay-1 font-display text-6xl sm:text-7xl lg:text-8xl font-bold text-ink leading-[0.95] mb-6">

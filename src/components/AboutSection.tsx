@@ -14,7 +14,7 @@ const AboutSection = () => {
             <div className="space-y-4 text-dim max-w-[68ch] text-base leading-relaxed">
               <p>
                 I am a product and business operator who enjoys building systems, products, and businesses from the
-                ground up. Currently a Senior Product Manager at UnifyApps, I lead initiatives focused on AI-driven
+                ground up. Currently an Associate Director of Product Management at UnifyApps, I lead initiatives focused on AI-driven
                 product experiences and automation — designing scalable products, integrating multiple systems, and
                 helping enterprise clients adopt complex AI platforms.
               </p>
@@ -30,7 +30,7 @@ const AboutSection = () => {
           {/* Side card */}
           <aside className="animate-on-scroll-right card-paper p-6">
             <p className="eyebrow text-gold mb-3">Currently</p>
-            <p className="font-display text-lg text-ink leading-snug">Senior PM @ UnifyApps</p>
+            <p className="font-display text-lg text-ink leading-snug">Associate Director of Product Management @ UnifyApps</p>
             <p className="text-sm text-dim mt-1">AI-driven product experiences · Mumbai</p>
 
             <div className="h-px bg-[hsl(var(--line))] my-5" />
