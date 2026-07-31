@@ -1,60 +1,60 @@
-import SectionHeader from './SectionHeader';
+import SectionHeader from "./SectionHeader";
 
 const experiences = [
   {
-    company: 'UnifyApps',
-    role: 'Associate Director of Product Management',
-    location: 'Mumbai',
-    description: 'Led product initiatives focused on AI-driven automation and enterprise product demonstrations.',
+    company: "UnifyApps",
+    role: "Associate Director of Product Management",
+    location: "Mumbai",
+    description: "Led product initiatives focused on AI-driven automation and enterprise product demonstrations.",
     highlights: [
-      'Built an automated demo creation system reducing delivery time by 47%',
-      'Helped generate $450K in new ARR through enterprise product demonstrations',
-      'Worked with integrations across 400+ connectors and 60+ UI components',
-      'Collaborated closely with sales to accelerate enterprise deal cycles',
-      'Led a cross-functional team of 11 across product, design, and engineering',
+      "Built an automated demo creation system reducing delivery time by 47%",
+      "Helped generate $1.2Mn in new ARR through enterprise product demonstrations",
+      "Worked with integrations across 700+ connectors and 80+ UI components",
+      "Collaborated closely with sales to accelerate enterprise deal cycles",
+      "Led a cross-functional team of 11 across product, and FDEs",
     ],
     metrics: [
-      { num: '$450K', label: 'New ARR' },
-      { num: '−47%', label: 'Delivery time' },
-      { num: '400+', label: 'Connectors' },
-      { num: '11', label: 'Team led' },
+      { num: "$1.2Mn", label: "New ARR" },
+      { num: "−47%", label: "Delivery time" },
+      { num: "700+", label: "Connectors" },
+      { num: "11", label: "Team led" },
     ],
   },
   {
-    company: 'Sprinklr',
-    role: 'Product Manager → Senior Product Analyst',
-    location: 'Mumbai',
+    company: "Sprinklr",
+    role: "Product Manager → Senior Product Analyst",
+    location: "Mumbai",
     description:
-      'Worked on digital customer care and experience management platforms used by large global enterprises.',
+      "Worked on digital customer care and experience management platforms used by large global enterprises.",
     highlights: [
-      'Led product initiatives generating $17M ARR',
-      'Improved user productivity by 20%',
-      'Reduced support tickets by 25% through product improvements',
-      'Built standardized user personas to improve adoption across 15K+ users',
-      'Managed a team of 2 analysts to drive product operations and delivery',
+      "Led product initiatives generating $17M ARR",
+      "Improved user productivity by 20%",
+      "Reduced support tickets by 25% through product improvements",
+      "Built standardized user personas to improve adoption across 15K+ users",
+      "Managed a team of 2 analysts to drive product operations and delivery",
     ],
     metrics: [
-      { num: '$17M', label: 'ARR' },
-      { num: '−25%', label: 'Tickets' },
-      { num: '15K+', label: 'Users' },
-      { num: '2', label: 'Team led' },
+      { num: "$17M", label: "ARR" },
+      { num: "−25%", label: "Tickets" },
+      { num: "15K+", label: "Users" },
+      { num: "2", label: "Team led" },
     ],
   },
   {
-    company: 'TBS Planet Comics',
-    role: 'Founding Member',
-    location: 'IIT Roorkee',
-    description: 'An IIT Roorkee incubated comics venture focused on digital storytelling.',
+    company: "TBS Planet Comics",
+    role: "Founding Member",
+    location: "IIT Roorkee",
+    description: "An IIT Roorkee incubated comics venture focused on digital storytelling.",
     highlights: [
-      'Managed 5 simultaneous projects with artists and studios',
-      'Built a network of 500+ campus ambassadors',
-      'Grew a digital subscriber base to 6000+ users',
-      'Created vernacular comics available in six languages',
+      "Managed 5 simultaneous projects with artists and studios",
+      "Built a network of 500+ campus ambassadors",
+      "Grew a digital subscriber base to 6000+ users",
+      "Created vernacular comics available in six languages",
     ],
     metrics: [
-      { num: '6K+', label: 'Subscribers' },
-      { num: '500+', label: 'Ambassadors' },
-      { num: '6', label: 'Languages' },
+      { num: "6K+", label: "Subscribers" },
+      { num: "500+", label: "Ambassadors" },
+      { num: "6", label: "Languages" },
     ],
   },
 ];
@@ -69,15 +69,13 @@ const ExperienceSection = () => {
           {/* Left rail */}
           <div
             className="absolute left-3 md:left-5 top-2 bottom-2 w-px"
-            style={{ background: 'linear-gradient(to bottom, hsl(var(--gold)) 0%, hsl(var(--line)) 100%)' }}
+            style={{ background: "linear-gradient(to bottom, hsl(var(--gold)) 0%, hsl(var(--line)) 100%)" }}
           />
 
           {experiences.map((exp, index) => (
             <div key={exp.company} className={`animate-on-scroll relative mb-6 last:mb-0`}>
               {/* dot */}
-              <span
-                className="absolute -left-[calc(2.5rem-6px)] md:-left-[calc(3.5rem-6px)] top-6 w-3 h-3 rounded-full bg-gold ring-4 ring-paper"
-              />
+              <span className="absolute -left-[calc(2.5rem-6px)] md:-left-[calc(3.5rem-6px)] top-6 w-3 h-3 rounded-full bg-gold ring-4 ring-paper" />
 
               <div className="card-paper p-6 md:p-7">
                 <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-2">
