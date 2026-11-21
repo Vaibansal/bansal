@@ -416,14 +416,14 @@ export const career = [
   },
   {
     org: 'UnifyApps',
-    role: 'Associate Director, Product Management',
+    role: 'Sr Product Manager → Associate Director, Product Management',
     dates: 'Nov 2024 – Jul 2026',
     line: 'AI-driven demo automation: −47% delivery time, $1.2M new ARR, 1,000+ connectors, team of 11.',
   },
   {
     org: 'Sprinklr',
-    role: 'Product Manager · Senior Product Analyst',
-    dates: 'Jun 2021 – Nov 2024',
+    role: 'Product Analyst → Associate Product Manager → Product Manager',
+    dates: 'Jun 2021 – Oct 2024',
     line: 'Speech-to-text after-call automation (+15% call attempts), Best Time to Call prediction (+18% connects), $17M ARR, 15K+ users.',
   },
   {
