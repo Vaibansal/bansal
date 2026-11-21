@@ -27,7 +27,9 @@ const Block = ({ label, items, text }: { label: string; items?: string[]; text?:
 const WorkPage = () => {
   const { slug = '' } = useParams();
   const p = bySlug(slug);
-  useEffect(() => window.scrollTo(0, 0), [slug]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
   useReveal(slug);
 
   if (!p) {
