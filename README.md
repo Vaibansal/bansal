@@ -2,13 +2,13 @@
 
 I want to create a personal website for myself and use that as my portfolio. design must be rich and sleek. for context i am a jack of all trades and here id my resume.
 
-This project was built with [Lovable](https://lovable.dev).
+This site is a Vite + React app, hosted on Vercel.
 
-**Live app**: https://bansal.lovable.app
+**Live app**: https://www.bansalbuilds.com
 
 ## Build with Lovable
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/95106c36-08d9-4fa5-8a17-5fc87edb7ce7).
+Develop locally with `npm install` and `npm run dev`. Pushes to `main` redeploy the site.
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.

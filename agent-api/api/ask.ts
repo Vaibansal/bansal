@@ -7,7 +7,7 @@ import Anthropic from '@anthropic-ai/sdk';
 const client = new Anthropic();
 
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ||
-  'https://bansal.lovable.app,http://localhost:8080').split(',');
+  'https://www.bansalbuilds.com,http://localhost:8080').split(',');
 
 const SYSTEM = `You answer questions about Vaibhav Bansal's work for visitors to his portfolio (recruiters, hiring managers, engineers).
 Use only the passages provided in the user turn. If they do not contain the answer, say that the portfolio does not cover it and suggest emailing vaibhavbansal2812@gmail.com.
